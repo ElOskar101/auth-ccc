@@ -7,7 +7,7 @@ export function Label ({children, ...props}: Props) {
     return (
         <label
             {...props}
-            className="block mb-1 text-md text-shadow-lg font-medium text-heading">
+            className="mb-1 text-gray-700 dark:text-gray-50 font-semibold">
             {children}
         </label>
     );

@@ -1,0 +1,18 @@
+{
+  "login": {
+    "loginTo": "Login to",
+    "username": "Username",
+    "password": "Password",
+    "usernamePlaceholder": "My Username",
+    "logIn": "Log In",
+    "isNewUser": "Dont, you have an account",
+    "createAccount": "Create Account",
+    "haveLostTheirPassword": "Forgot your password",
+    "resetPassword": "Reset Password",
+    "selectLanguage": "Select Language",
+    "spanishLanguage": "Español",
+    "englishLanguage": "English",
+    "selectApplication": "Select application",
+    "rightReserved": "All rights reserved."
+  }
+}

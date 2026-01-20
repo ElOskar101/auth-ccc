@@ -22,12 +22,12 @@ export const AppSelectorItem = ({
             <img
             src={app.logo}
             alt={app.id}
-            className={`p-5 h-20  shadow-lg rounded-full hover:bg-gray-100  hover:shadow-xl hover:scale-110 transition-transform
+            className={`p-5 h-20  shadow-lg rounded-full hover:bg-gray-100 dark:hover:bg-zinc-500   hover:shadow-xl hover:scale-110 transition-transform ring-2 ring-gray-50
                 ${isActive
-                ? 'bg-gray-100 ring-2 ring-gray-200'
-                : 'bg-white'}`}
+                ? 'bg-gray-100 dark:bg-zinc-600'
+                : 'bg-white ring-2'}`}
             />
-            <p className="text-gray-700 p-1">{app.name}</p>
+            <p className="text-gray-700 dark:text-zinc-50 p-1">{app.name}</p>
         </button>
     )
 }
