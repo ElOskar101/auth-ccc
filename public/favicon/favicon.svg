@@ -1,16 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1080"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1080"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1080 1080" style="enable-background:new 0 0 1080 1080;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#1F6FB1;}
-	.st1{fill:#8F8F95;}
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+	.st3{fill:#1F6FB1;}
+	.st4{fill:#8F8F95;}
+	.st5{fill:#6C4BE8;}
+	.st6{fill:url(#SVGID_4_);}
+	.st7{fill:url(#SVGID_5_);}
+	.st8{fill:url(#SVGID_6_);}
+	.st9{fill:url(#SVGID_7_);}
+	.st10{fill:url(#SVGID_8_);}
+	.st11{fill:url(#SVGID_9_);stroke:url(#SVGID_10_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st12{fill:url(#SVGID_11_);stroke:url(#SVGID_12_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st13{fill:url(#SVGID_13_);stroke:url(#SVGID_14_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st14{fill:url(#SVGID_15_);stroke:url(#SVGID_16_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st15{fill:url(#SVGID_17_);stroke:url(#SVGID_18_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st16{fill:url(#SVGID_19_);stroke:url(#SVGID_20_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st17{fill:url(#SVGID_21_);stroke:url(#SVGID_22_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st18{fill:url(#SVGID_23_);stroke:url(#SVGID_24_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st19{fill:url(#SVGID_25_);stroke:url(#SVGID_26_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st20{fill:url(#SVGID_27_);stroke:url(#SVGID_28_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st21{fill:url(#SVGID_29_);stroke:url(#SVGID_30_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st22{fill:url(#SVGID_31_);stroke:url(#SVGID_32_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st23{fill:url(#SVGID_33_);stroke:url(#SVGID_34_);stroke-width:0.75;stroke-miterlimit:10;}
+	.st24{fill:url(#SVGID_35_);stroke:url(#SVGID_36_);stroke-width:0.75;stroke-miterlimit:10;}
 </style>
 <g>
-	
-		<rect x="392.8" y="501.3" transform="matrix(0.732 0.6813 -0.6813 0.732 579.2054 -364.1893)" class="st0" width="719.6" height="105.7"></rect>
-	
-		<rect x="-55.5" y="499.9" transform="matrix(0.7193 -0.6947 0.6947 0.7193 -299.3264 362.5998)" class="st0" width="709.2" height="103.7"></rect>
-	
-		<rect x="320.6" y="606.5" transform="matrix(-0.7113 -0.7029 0.7029 -0.7113 291.7052 1424.8684)" class="st0" width="235.7" height="92"></rect>
-	<circle class="st1" cx="524" cy="541.5" r="86.9"></circle>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="462.0289" y1="878.4446" x2="904.8245" y2="196.4491">
+		<stop offset="0" style="stop-color:#6C4BE8"></stop>
+		<stop offset="1" style="stop-color:#1F6FB1"></stop>
+	</linearGradient>
+	<path class="st0" d="M876.3,902.5c2.3,2.2-0.4,5.9-3.2,4.4c-85.3-44.9-212.6-92.6-371.3-92.7c-243.5-0.1-414.6,112-478.4,159.8
+		c-2.4,1.8-5.6-1-4-3.6l266.5-448.4L557.3,65.4c1.1-1.8,3.7-1.8,4.8,0l77.9,135l34.8,60.3c0.5,0.8,0.5,1.9,0,2.7
+		c-83.4,148.1-166.7,296.2-250,444.3c-1,1.8,0.2,4.1,2.3,4.1c62.3,2.1,186.8,14.9,318.7,91.6C798.3,834.1,841.4,868.7,876.3,902.5z"></path>
+	<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="588.6292" y1="686.5432" x2="765.7054" y2="363.2301">
+		<stop offset="0" style="stop-color:#6C4BE8"></stop>
+		<stop offset="1" style="stop-color:#1F6FB1"></stop>
+	</linearGradient>
+	<path class="st1" d="M792.5,479.8L666,708l-37-16l0.2-0.3c-0.2-0.1-0.4-0.1-0.6-0.2c-33.7-13.9-66.2-26-97.2-36.5
+		c-5.5-1.9-8-8.2-5.3-13.3l165.3-308.4c3.5-6.5,12.7-6.6,16.4-0.2c21.1,36.6,42.1,73.3,63.2,109.9l0,0L792.5,479.8z"></path>
+	<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="866.6684" y1="859.4128" x2="1004.2835" y2="608.1495">
+		<stop offset="0" style="stop-color:#6C4BE8"></stop>
+		<stop offset="1" style="stop-color:#1F6FB1"></stop>
+	</linearGradient>
+	<path class="st2" d="M1065.5,968.2c-30.6-28-64-56-100.2-83.7c-93.7-71.4-187.7-125.3-275.9-166.3c-0.1-0.1-0.3-0.1-0.4-0.2l0,0
+		l-6.4-2.8L803,497.9l3,5.1l-0.3,0.5C894,657,982.3,810.6,1070.5,964.2C1072.4,967.4,1068.3,970.7,1065.5,968.2z"></path>
 </g>
 </svg></svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
 @media (prefers-color-scheme: dark) { :root { filter: none; } }

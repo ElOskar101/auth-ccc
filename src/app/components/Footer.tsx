@@ -3,7 +3,7 @@ export const Footer = () => {
     const { t } = useTranslation();
 
     return (
-        <footer className="w-full bg-gray-50 dark:bg-zinc-800 dark:text-gray-50 text-gray-500 p-6 shadow-lg text-sm rounded-lg">
+        <footer className="w-full bg-gray-50 border border-gray-50 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-50 text-gray-500 p-6 shadow-lg text-sm rounded-lg">
             <div className="flex justify-between">
                 <div className="flex self-center tracking-wide">
                     <span>© {new Date().getFullYear()} DentalRobot. </span>

@@ -13,7 +13,7 @@ export const AppSelector = ({apps,
                                 onSelect}: AppSelectorProps) => {
     const { t } = useTranslation();
     return (
-        <div className="bg-white dark:bg-zinc-800 shadow-lg rounded-xl mt-5 p-2">
+        <div className="bg-white border border-gray-50 dark:border-zinc-600 dark:bg-zinc-800 shadow-lg rounded-xl mt-5 p-2">
                 <p className="text-center text-lg font-semibold text-gray-700 py-2 dark:text-zinc-50">{t('login.selectApplication')}</p>
             <div className="flex  ">
                 {
