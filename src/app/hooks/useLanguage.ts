@@ -5,13 +5,14 @@ export const useLanguage = () => {
         return localStorage.getItem('language') || 'en';
     });
 
-    const changeLanguage = (lang: string) => {
-        localStorage.setItem('language', lang);
-        setLanguage(lang);
+    const toggleLanguage = () => {
+        const newLanguage = language === "es" ? "en" : "es";
+        localStorage.setItem('language', newLanguage);
+        setLanguage(newLanguage);
     }
 
     return {
         language,
-        changeLanguage,
+        toggleLanguage,
     };
 }

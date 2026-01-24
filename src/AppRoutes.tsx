@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import {AuthLayout} from "./app/layouts/AuthLayout";
-import {Login} from "./app/pages/auth/Login";
-import {Register} from "./app/pages/auth/Register";
-import {ForgotPassword} from "./app/pages/auth/ForgotPassword";
+import {LoginPage} from "./app/pages/auth/login.page.tsx";
+import {RegisterPage} from "./app/pages/auth/register.page.tsx";
+import {ForgotPasswordPage} from "./app/pages/auth/forgot-password.page.tsx";
 
 
 export const AppRoutes = () => {
@@ -10,10 +10,10 @@ export const AppRoutes = () => {
         <Routes>
             {/* Auth Routes */}
             <Route element={<AuthLayout/>}>
-                <Route index element={<Login/>}/>
-                <Route path="login" element={<Login/>}/>
-                <Route path="register" element={<Register/>}/>
-                <Route path="forgot-password" element={<ForgotPassword/>}/>
+                <Route index element={<LoginPage/>}/>
+                <Route path="login" element={<LoginPage/>}/>
+                <Route path="register" element={<RegisterPage/>}/>
+                <Route path="forgot-password" element={<ForgotPasswordPage/>}/>
             </Route>
         </Routes>
     )

@@ -1,6 +1,6 @@
 import React from "react";
-type Props = React.InputHTMLAttributes<HTMLInputElement>
-export function Input (props: Props) {
+
+export function Input (props: React.InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input
             {...props}

@@ -1,5 +1,5 @@
-export { Label } from "./Label";
-export { Input } from "./Input";
-export { Button } from "./Button";
-export { Footer } from "../Footer.tsx";
-export { LinkButton } from "./LinkButton";
+export { Label } from "./label.tsx";
+export { Input } from "./input.tsx";
+export { Button } from "./button.tsx";
+export { Footer } from "../footer.tsx";
+export { LinkButton } from "./link-button.tsx";
