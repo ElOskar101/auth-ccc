@@ -3,16 +3,15 @@ import {useNavigate} from "react-router-dom";
 import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import { BsFillEyeFill } from "react-icons/bs";
-import { RiEyeCloseLine } from "react-icons/ri";
+
 import i18n from 'i18next';
-import {useLanguage} from "@/app/hooks/useLanguage.ts";
 import {LoginFormData, loginSchema} from "@/app/pages/auth/schema/login.schema.ts";
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
 import {LogoImage} from "@/app/components/ui/logo-image.tsx";
 import {useAppSelector} from "@/app/hooks/useAppSelector.ts";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
 import {useLanguageContext} from "@/app/context/LanguageContext.tsx";
+import {InputPassword} from "@/app/components/ui/input-password.tsx";
 
 export const LoginPage = ()=> {
 
@@ -61,7 +60,7 @@ export const LoginPage = ()=> {
                     {currentApp &&
                         (
                             <>
-                                <LogoImage src={currentApp.logo} alt={currentApp.name} />
+                                <LogoImage src={currentApp.logo} alt={currentApp.name} width={100} />
                                 <p className="text-center dark:text-gray-50 text-lg font-semibold text-gray-700 py-3 ">{`${t('login.loginTo')} ${currentApp.name}`}</p>
                             </>
                         )
@@ -78,9 +77,10 @@ export const LoginPage = ()=> {
                             </div>
                             <div className="">
                                 <Label htmlFor="password">{t('login.password')}</Label>
-                                <Input className="focus:scale-110 transition-transform" type="password" id="password" name="password" autoComplete="current-password"
+                                <InputPassword/>
+                                {/*<Input className="focus:scale-110 transition-transform"
                                        onChange={handleChange}
-                                       placeholder="**************" required/>
+                                       placeholder="**************" required/>*/}
                             </div>
                             <div className="mb-3">
                                 <Button
@@ -107,42 +107,6 @@ export const LoginPage = ()=> {
                                 {t('login.resetPassword')}
                             </LinkButton>
 
-                        </div>
-                        <div className="relative inline-block text-left group">
-                            <button
-                                aria-haspopup="menu"
-                                aria-expanded="false"
-                                className="inline-flex items-center justify-center rounded-md text-gray-700 dark:text-gray-50 hover:border-b-gray-700 cursor-pointer p-2 group-hover:shadow-lg group-hover:bg-gray-100 dark:group-hover:bg-zinc-700"
-                            >
-                                {`${i18n.language === 'es' ? t('login.spanishLanguage') : t('login.englishLanguage')}`}
-                                <svg
-                                    className="ml-2 h-4 w-4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </button>
-
-
-                            <div
-                                className="absolute top-full z-10 w-44 dark:bg-zinc-800 origin-top-right shadow-lg rounded-md bg-white hidden group-hover:block"
-                            >
-                                <div className="py-1">
-                                    <button
-                                        onClick={() => onHandleChangeLanguage('es')}
-                                        className="block px-4 py-2 text-sm text-start text-blue-700 dark:hover:bg-zinc-700 hover:bg-gray-100 w-full cursor-pointer">
-                                        {t('login.spanishLanguage')}
-                                    </button>
-                                    <button
-                                        onClick={() => onHandleChangeLanguage('en')}
-                                        className="block px-4 py-2 text-sm text-start dark:hover:bg-zinc-700 text-red-600 hover:bg-gray-100 w-full cursor-pointer">
-                                        {t('login.englishLanguage')}
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

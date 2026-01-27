@@ -1,11 +1,18 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import {RouterNavigateOptions} from "react-router";
 
-export const LinkButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
+interface Props {
+    href: string;
+    options?: RouterNavigateOptions;
+    children: React.ReactNode
+}
+
+export const LinkButton = ({href, options, children}: Props  ) => {
 
     const navigate = useNavigate();
     return (
-        <a onClick={()=>navigate(href)}
+        <a onClick={()=>navigate(href, options)}
            className="text-blue-700 hover:text-blue-800 hover:cursor-pointer">
             {children}
         </a>

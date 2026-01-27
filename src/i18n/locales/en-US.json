@@ -5,14 +5,30 @@
     "password": "Password",
     "usernamePlaceholder": "My Username",
     "logIn": "Log In",
-    "isNewUser": "Dont you have an account",
+    "isNewUser": "Don't you have an account?",
     "createAccount": "Create Account",
-    "haveLostTheirPassword": "Forgot your password",
+    "haveLostTheirPassword": "Forgot your password?",
     "resetPassword": "Reset Password",
     "selectLanguage": "Select Language",
     "spanishLanguage": "Español",
     "englishLanguage": "English",
     "selectApplication": "Select application",
     "rightReserved": "All rights reserved."
+  },
+  "register":{
+    "username": "Username",
+    "usernamePlaceholder": "Unique username",
+    "email": "E-mail",
+    "emailPlaceholder": "mail@email.com",
+    "password": "password",
+    "passwordPlaceholder": "New password",
+    "repeatPassword": "Repeat password",
+    "repeatedPasswordPlaceholder": "Same password",
+    "passwordRule1": "Between 8 and 24 characters min",
+    "passwordRule2": "Must contain numbers and letters",
+    "passwordRule3": "Both passwords must match",
+    "createAccount": "Create account",
+    "backToLogin": "Back to login"
   }
 }
+

@@ -6,7 +6,7 @@ export const LogoImage = ({src, alt, ...props}: React.ImgHTMLAttributes<HTMLImag
             {...props}
             src={src}
             alt={alt}
-            className='w-24 mx-auto dark:brightness-110
+            className='mx-auto dark:brightness-110
                                     dark:contrast-110
                                     dark:saturate-110'
         />

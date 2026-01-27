@@ -10,7 +10,7 @@ export const LangAndThemeSelector = () => {
     const { theme, toggleTheme } = useTheme();
     const { toggleLanguage } = useLanguageContext();
 
-    return (<div className="flex gap-4 ml-auto px-2 py-1 rounded-full bg-zinc-100 dark:bg-zinc-900">
+    return (<div className="flex gap-4 ml-auto px-2 py-1 shadow-inner shadow-gray-300 rounded-full bg-zinc-100 dark:shadow-zinc-800 dark:bg-zinc-900">
         <RoundedTinyButton onClick={() => toggleTheme()}>
             {theme === 'light' ? <IoMoonOutline color="gray" size={22} /> : <MdLightMode color="white" size={22}/>}
         </RoundedTinyButton>
