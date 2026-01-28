@@ -1,8 +1,10 @@
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
-import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/ui/card";
+import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/card";
 import {LogoImage} from "@/app/components/ui/logo-image.tsx";
 import {useAppSelector} from "@/app/hooks/useAppSelector.ts";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
+import {Modal, ModalHeader, ModalBody, ModalFooter} from "@/app/components/modal";
+import { IoCloseOutline } from "react-icons/io5";
 import {Button, Input, Label, LinkButton} from "@/app/components/ui";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
@@ -13,6 +15,7 @@ import {RequiredFieldsMessage} from "@/app/pages/auth/components/required-fields
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {RegisterFormData, registerSchema} from "@/app/pages/auth/schema/register.schema.ts";
+import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 
 const passwordRules = [
     {
@@ -37,6 +40,7 @@ export const RegisterPage = ()=> {
     const { currentApp } = useAppSelector();
     const {language} = useLanguageContext();
     const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState<boolean>(false);
+    const [openModal, setOpenModal] = useState<boolean>(false);
     const form = useForm<RegisterFormData>({
         resolver: zodResolver(registerSchema),
         mode: 'onChange',
@@ -117,7 +121,7 @@ export const RegisterPage = ()=> {
                                         return (
                                             <li
                                                 key={rule.label}
-                                                className={valid ? 'text-green-600' : 'text-gray-400'}
+                                                className={valid ? 'text-green-600 dark:text-green-500' : 'text-gray-400'}
                                             >
                                                 {valid ? '✔' : '•'} {rule.label}
                                             </li>
@@ -145,8 +149,8 @@ export const RegisterPage = ()=> {
 
                             <div className="flex gap-1">
                                 <input type="checkbox" checked={termsAndConditionsAccepted} onChange={()=>{setTermsAndConditionsAccepted(!termsAndConditionsAccepted)}}/>
-                                <p className="text-gray-500 dark:text-gray-50">I do accept
-                                    <LinkButton href={'#'}> terms and conditions</LinkButton>
+                                <p className="text-gray-500 dark:text-gray-50">{t("register.acceptThe")}
+                                    <LinkButton href={'#'} action={()=>setOpenModal(true)}>{t("register.t&c")}</LinkButton>
                                 </p>
                             </div>
 
@@ -155,6 +159,8 @@ export const RegisterPage = ()=> {
                                 disabled={!termsAndConditionsAccepted || !form.formState.isValid}
                                 type="submit"
                                 role="button"
+                                className="w-full"
+                                variant="primary"
                             >{t('register.createAccount')}</Button>
 
                         </fieldset>
@@ -166,28 +172,60 @@ export const RegisterPage = ()=> {
                     <LinkButton href='/login' options={{replace: true}}>{t('register.backToLogin')}</LinkButton>
                 </CardFooter>
             </Card>
+
+            {/* TERMS AND CONDITIONS MODAL */}
+            <Modal isOpen={openModal} onClose={()=>setOpenModal(false)}>
+                <ModalHeader>
+                    <h2 className="font-semibold capitalize">
+                        {t("register.t&c")}
+                    </h2>
+                    <RoundedTinyButton className="cursor-pointer" onClick={()=> setOpenModal(false)}>
+                        <IoCloseOutline/>
+                    </RoundedTinyButton>
+                </ModalHeader>
+
+                <ModalBody className="bg-gray-50 mx-2 dark:bg-zinc-800 max-h-[50vh] overflow-y-auto">
+                    <h1 className="text-lg font-[arial] uppercase ">
+                        1- {t("t&c.createAccountTitle1")}
+                    </h1>
+                    <div className="font-serif leading-relaxed text-gray-700 dark:text-gray-200 space-y-2">
+
+                        <p>• {t("t&c.createAccountExplanation1")}</p>
+                        <p>• {t("t&c.createAccountExplanation2")}</p>
+                        <p>• {t("t&c.createAccountExplanation3")}</p>
+                    </div>
+
+                    <h1 className="text-lg font-[arial] uppercase mt-4 ">
+                        2- {t("t&c.agreementTitle1")}
+                    </h1>
+                    <div className="font-serif leading-relaxed text-gray-700 dark:text-gray-200 space-y-2">
+
+                        <p>• {t("t&c.agreementTopic1")}</p>
+                        <p>• {t("t&c.agreementTopic2")}</p>
+                        <p>• {t("t&c.agreementTopic3")}</p>
+                        <p>• {t("t&c.agreementTopic4")}</p>
+                    </div>
+
+                    <h1 className="text-lg font-[arial] uppercase mt-4 ">
+                        3- {t("t&c.createAccountClarificationTitle1")}
+                    </h1>
+                    <div className="font-serif leading-relaxed text-gray-700 dark:text-gray-200 space-y-3 italic">
+
+                        <p>{t("t&c.createAccountClarification1")}</p>
+                        <p>{t("t&c.createAccountClarification2")}</p>
+                        <p>{t("t&c.createAccountClarification3")}</p>
+                        <p>{t("t&c.createAccountClarification4")}</p>
+                    </div>
+
+                </ModalBody>
+                <ModalFooter>
+                    <Button
+                        variant="neutral"
+                    >{t("defaults.close")}</Button>
+                </ModalFooter>
+            </Modal>
         </PageWrapper>
     );
 }
 
 
-/*
-Al crear una cuenta en Control Central podrás:
-- Acceder al dashboard de Control Central
-- Acceder al dashboard de Incidents
-- Conectar tu cuenta al proceso de ejecuciones en producción (actualizaciones de bots, contraseñas, administración de clientes...)
-- Tener acceso interno a los servicios y apps de CC (Formless, Lite Plans, Executions...)
-
-Algunos accesos varían en dependencia del rol y del área
-Una vez creada, la cuenta debe ser activada por el administrador: solicita a tu superior la activación de esta cuenta.
-Soliita a tu superior la clavde de ingreso para tu área
-Para obtener una cuenta de desarrollo, contacta con el administrador. Si ya tienes una cuenta de desarrollo, selecciona la app de desarrollo en la esquina superior derecha de este sitio web
-
-
-Al crear tu cuenta en Control Central aceptas lo siguiente:
-1- No compartirás tus credenciales de acceso (nadie, ni siquiera el administrador conocerá tu contraseña)
-2- Usarás un correo brindado por la empresa
-3- El sistema registrará las acciones que realices en Control Central
-4- Usarás factor de doble autenticación (es necesario una app autenticarse)
-
-*/

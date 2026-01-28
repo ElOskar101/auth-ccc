@@ -88,7 +88,7 @@ export const LoginPage = ()=> {
                             <div className="mb-3">
                                 <Button
                                     disabled={!isValid}
-                                    className="focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full"
                                     type="submit">
                                     {t('login.logIn')}
                                 </Button>

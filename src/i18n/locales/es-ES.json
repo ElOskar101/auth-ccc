@@ -27,7 +27,30 @@
     "passwordRule1": "Entre 8 y 24 caracteres",
     "passwordRule2": "Debe contener números y letras",
     "passwordRule3": "Deben coincidir ambas contraseñas",
+    "acceptThe": "Acepto los ",
+    "t&c": "términos y condiciones",
     "createAccount": "Crear cuenta",
     "backToLogin": "Regresar a inicio de sesión"
+  },
+  "t&c":{
+    "createAccountTitle1": "Al crear una cuenta en Control Central podrás:",
+    "createAccountExplanation1": "Acceder al dashboard de Control Central e Incidents",
+    "createAccountExplanation2": "Conectar tu cuenta al proceso de ejecuciones en producción (actualizaciones de bots, contraseñas, administración de clientes...)",
+    "createAccountExplanation3": "Tener acceso interno a los servicios y apps de CC (Formless, Lite Plans, Executions...)",
+    "createAccountClarificationTitle1": "Siguientes pasos",
+    "createAccountClarification1": "Algunos accesos varían en dependencia del rol y del área",
+    "createAccountClarification2": "Una vez creada, la cuenta debe ser activada por el administrador: solicita a tu superior la activación de esta cuenta.",
+    "createAccountClarification3": "Solicita a tu superior la clave de ingreso para tu área",
+    "createAccountClarification4": "Para obtener una cuenta de desarrollo, contacta con el administrador. Si ya tienes una cuenta de desarrollo, selecciona la app de desarrollo en la esquina superior derecha de este sitio web",
+    "agreementTitle1": "Al crear tu cuenta en Control Central aceptas lo siguiente:",
+    "agreementTopic1": "No compartirás tus credenciales de acceso (nadie, ni siquiera el administrador conocerá tu contraseña)",
+    "agreementTopic2": "Usarás un correo brindado por la empresa",
+    "agreementTopic3": "El sistema registrará las acciones que realices en Control Central",
+    "agreementTopic4": "Usarás factor de doble autenticación (es necesario una app autenticarse)",
+    "agreementTopic5": ""
+  },
+  "defaults": {
+    "close": "Cerrar"
   }
 }
+

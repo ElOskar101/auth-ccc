@@ -27,8 +27,29 @@
     "passwordRule1": "Between 8 and 24 characters min",
     "passwordRule2": "Must contain numbers and letters",
     "passwordRule3": "Both passwords must match",
+    "acceptThe": "I do accept ",
+    "t&c": "terms and conditions",
     "createAccount": "Create account",
     "backToLogin": "Back to login"
+  },
+  "t&c":{
+    "createAccountTitle1": "By creating an account on Control Central you will be able to:",
+    "createAccountExplanation1": "Access the Central Control dashboard and Incidents",
+    "createAccountExplanation2": "Connect your account to the production execution process (bot updates, passwords, client management, etc.)",
+    "createAccountExplanation3": "Having internal access to CC services and apps (Formless, Lite Plans, Executions...)",
+    "createAccountClarificationTitle1": "Next steps",
+    "createAccountClarification1": "Some access levels vary depending on the role and area",
+    "createAccountClarification2": "Once created, the account must be activated by the administrator: ask your superior to activate your account.",
+    "createAccountClarification3": "Request the login code for your area from your supervisor.",
+    "createAccountClarification4": "To get a developer account, contact the administrator. If you already have a developer account, select the developer app in the upper right corner of this website.",
+    "agreementTitle1": "By creating your account on Control Central you agree to the following:",
+    "agreementTopic1": "You will not share your login credentials (no one, not even the administrator, should know your password)",
+    "agreementTopic2": "You will use an email address provided by the company",
+    "agreementTopic3": "The system will record the actions you perform on Central Control",
+    "agreementTopic4": "You will use two-factor authentication (an app is required to authenticate)"
+  },
+  "defaults": {
+    "close": "Close"
   }
 }
 
