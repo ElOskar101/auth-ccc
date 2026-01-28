@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-
+import { zodResolver } from '@hookform/resolvers/zod';
 import i18n from 'i18next';
 import {LoginFormData, loginSchema} from "@/app/pages/auth/schema/login.schema.ts";
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
@@ -12,6 +12,8 @@ import {useAppSelector} from "@/app/hooks/useAppSelector.ts";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
 import {useLanguageContext} from "@/app/context/LanguageContext.tsx";
 import {InputPassword} from "@/app/components/ui/input-password.tsx";
+import {useForm} from "react-hook-form";
+import {RequiredFieldsMessage} from "@/app/pages/auth/components/required-fields-message.tsx";
 
 export const LoginPage = ()=> {
 
@@ -20,6 +22,10 @@ export const LoginPage = ()=> {
     const {currentApp, APPS, setCurrentApp} = useAppSelector();
     const { t } = useTranslation();
     const [formData, setFormData] = useState<LoginFormData>({username: "", password: ""});
+    const form = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        mode: 'onChange',
+    });
     const [isValid, setIsValid] = useState<boolean|null>(null);
 
     useEffect(() => {
@@ -32,7 +38,6 @@ export const LoginPage = ()=> {
 
         if (!result.success) return;
         navigate('')
-
     }
 
     const validateForm = (data: LoginFormData) => {
@@ -74,13 +79,11 @@ export const LoginPage = ()=> {
                                 <Input className="focus:scale-110 transition-transform" type="text" id="username" name="username" autoComplete="username"
                                        onChange={handleChange}
                                        placeholder={t('login.usernamePlaceholder')} required/>
+
                             </div>
                             <div className="">
                                 <Label htmlFor="password">{t('login.password')}</Label>
                                 <InputPassword/>
-                                {/*<Input className="focus:scale-110 transition-transform"
-                                       onChange={handleChange}
-                                       placeholder="**************" required/>*/}
                             </div>
                             <div className="mb-3">
                                 <Button

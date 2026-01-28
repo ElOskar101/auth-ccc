@@ -5,14 +5,44 @@ import {useAppSelector} from "@/app/hooks/useAppSelector.ts";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
 import {Button, Input, Label, LinkButton} from "@/app/components/ui";
 import {useTranslation} from "react-i18next";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import i18n from "i18next";
 import {useLanguageContext} from "@/app/context/LanguageContext.tsx";
 import {InputPassword} from "@/app/components/ui/input-password.tsx";
+import {RequiredFieldsMessage} from "@/app/pages/auth/components/required-fields-message.tsx";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {RegisterFormData, registerSchema} from "@/app/pages/auth/schema/register.schema.ts";
+
+const passwordRules = [
+    {
+        label: 'Menos de 25 caracteres',
+        test: (v: string) => v.length < 25,
+    },{
+        label: 'Mínimo 8 caracteres',
+        test: (v: string) => v.length >= 8,
+    },
+    {
+        label: 'Un número',
+        test: (v: string) => /[0-9]/.test(v),
+    },
+    {
+        label: 'Una letra',
+        test: (v: string) => /[a-zA-Z]/.test(v),
+    }
+];
+
 
 export const RegisterPage = ()=> {
     const { currentApp } = useAppSelector();
     const {language} = useLanguageContext();
+    const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState<boolean>(false);
+    const form = useForm<RegisterFormData>({
+        resolver: zodResolver(registerSchema),
+        mode: 'onChange',
+    });
+    const password = form.watch('password') || '';
+    const repeatedPassword = form.watch('repeatedPassword') || '';
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -43,40 +73,78 @@ export const RegisterPage = ()=> {
 
                 </CardHeader>
                 <CardBody>
-                    <form noValidate onSubmit={onHandleRegister} >
-                        <fieldset className="space-y-5">
-                            <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{'Invalid credentials'}</p>
-                            <Label
-                                htmlFor="username"
-                            >{t('register.username')}</Label>
-                            <Input
-                                name="username"
-                                id="username"
-                                placeholder={t('register.usernamePlaceholder')}
-                            />
-                            <Label
-                                htmlFor="email"
-                            >{t('register.email')}</Label>
-                            <Input
-                                name="email"
-                                id="email"
-                                placeholder={t('register.emailPlaceholder')}
-                            />
-                            <Label
-                                htmlFor="password"
-                            >{t('register.password')}</Label>
-                            <InputPassword placeholder={t('register.passwordPlaceholder')}/>
-                            <Label
-                                htmlFor="repeated-password"
-                            >{t('register.repeatPassword')}</Label>
-                            <Input
-                                type="repeated-password"
-                                name="repeated-password"
-                                id="repeated-password"
-                                placeholder={t('register.repeatedPasswordPlaceholder')}
-                            />
+                    <form noValidate onSubmit={form.handleSubmit(onHandleRegister)} >
+                        <fieldset className="space-y-3">
+                            <div className="">
+                                <Label
+                                    htmlFor="username"
+                                >{t('register.username')}</Label>
+                                <Input
+                                    id="username"
+                                    {...form.register('username')}
+                                    placeholder={t('register.usernamePlaceholder')}
+                                />
+                                {form.formState.errors.username && (
+                                    <RequiredFieldsMessage>{form.formState.errors.username.message}</RequiredFieldsMessage>
+                                )}
+
+                            </div>
+
+                            <div className="">
+                                <Label
+                                    htmlFor="email"
+                                >{t('register.email')}</Label>
+                                <Input
+                                    id="email"
+                                    {...form.register('email')}
+                                    placeholder={t('register.emailPlaceholder')}
+                                />
+                                {form.formState.errors.email && (
+                                    <RequiredFieldsMessage>{form.formState.errors.email.message}</RequiredFieldsMessage>
+                                )}
+                            </div>
+
+                            <div className="">
+                                <Label
+                                    htmlFor="password"
+                                >{t('register.password')}</Label>
+                                <InputPassword
+                                    {...form.register('password')}
+                                    placeholder={t('register.passwordPlaceholder')}/>
+                                <ul className="mt-2 space-y-1 text-sm">
+                                    {passwordRules.map(rule => {
+                                        const valid = rule.test(password);
+                                        return (
+                                            <li
+                                                key={rule.label}
+                                                className={valid ? 'text-green-600' : 'text-gray-400'}
+                                            >
+                                                {valid ? '✔' : '•'} {rule.label}
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+
+                            <div className="">
+                                <Label
+                                    htmlFor="repeated-password"
+                                >{t('register.repeatPassword')}</Label>
+                                <InputPassword
+                                    id="repeatedPassword"
+                                    {...form.register('repeatedPassword')}
+                                    placeholder={t('register.repeatedPasswordPlaceholder')}
+                                />
+                                {(password && repeatedPassword) && (
+                                    <p className={`mt-2 text-sm ${password !== repeatedPassword ? "text-gray-400":"text-green-600"}`}>
+                                        {password === repeatedPassword ? '✔' : '•'} Password must match
+                                    </p>
+                                )}
+
+                            </div>
+
                             <div className="flex gap-1">
-                                <input type="checkbox"/>
+                                <input type="checkbox" checked={termsAndConditionsAccepted} onChange={()=>{setTermsAndConditionsAccepted(!termsAndConditionsAccepted)}}/>
                                 <p className="text-gray-500 dark:text-gray-50">I do accept
                                     <LinkButton href={'#'}> terms and conditions</LinkButton>
                                 </p>
@@ -84,6 +152,7 @@ export const RegisterPage = ()=> {
 
 
                             <Button
+                                disabled={!termsAndConditionsAccepted || !form.formState.isValid}
                                 type="submit"
                                 role="button"
                             >{t('register.createAccount')}</Button>
