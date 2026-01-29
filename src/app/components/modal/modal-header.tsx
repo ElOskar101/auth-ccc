@@ -8,7 +8,7 @@ export const ModalHeader = React.forwardRef<
         <div
         ref={ref}
         data-slot="modal-header"
-        className={cn("flex items-center justify-between px-6 py-4 ", className)}
+        className={cn("flex items-center justify-between px-6 py-4 border-b border-gray-200  dark:border-b-zinc-700", className)}
         {...props}
         />
 ));

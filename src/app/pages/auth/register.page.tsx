@@ -14,26 +14,9 @@ import {InputPassword} from "@/app/components/ui/input-password.tsx";
 import {RequiredFieldsMessage} from "@/app/pages/auth/components/required-fields-message.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {RegisterFormData, registerSchema} from "@/app/pages/auth/schema/register.schema.ts";
+import {RegisterFormData, registerSchema, passwordRules} from "@/app/pages/auth/schema/register.schema.ts";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 
-const passwordRules = [
-    {
-        label: 'Menos de 25 caracteres',
-        test: (v: string) => v.length < 25,
-    },{
-        label: 'Mínimo 8 caracteres',
-        test: (v: string) => v.length >= 8,
-    },
-    {
-        label: 'Un número',
-        test: (v: string) => /[0-9]/.test(v),
-    },
-    {
-        label: 'Una letra',
-        test: (v: string) => /[a-zA-Z]/.test(v),
-    }
-];
 
 
 export const RegisterPage = ()=> {
@@ -84,12 +67,13 @@ export const RegisterPage = ()=> {
                                     htmlFor="username"
                                 >{t('register.username')}</Label>
                                 <Input
+                                    autoFocus={true}
                                     id="username"
                                     {...form.register('username')}
                                     placeholder={t('register.usernamePlaceholder')}
                                 />
-                                {form.formState.errors.username && (
-                                    <RequiredFieldsMessage>{form.formState.errors.username.message}</RequiredFieldsMessage>
+                                {form.formState.errors.username?.message && (
+                                    <RequiredFieldsMessage>{t(form.formState.errors.username.message)}</RequiredFieldsMessage>
                                 )}
 
                             </div>
@@ -103,8 +87,8 @@ export const RegisterPage = ()=> {
                                     {...form.register('email')}
                                     placeholder={t('register.emailPlaceholder')}
                                 />
-                                {form.formState.errors.email && (
-                                    <RequiredFieldsMessage>{form.formState.errors.email.message}</RequiredFieldsMessage>
+                                {form.formState.errors.email?.message && (
+                                    <RequiredFieldsMessage>{t(form.formState.errors.email.message)}</RequiredFieldsMessage>
                                 )}
                             </div>
 
@@ -123,7 +107,7 @@ export const RegisterPage = ()=> {
                                                 key={rule.label}
                                                 className={valid ? 'text-green-600 dark:text-green-500' : 'text-gray-400'}
                                             >
-                                                {valid ? '✔' : '•'} {rule.label}
+                                                {valid ? '✔' : '•'} {t(rule.label)}
                                             </li>
                                         );
                                     })}
@@ -141,7 +125,7 @@ export const RegisterPage = ()=> {
                                 />
                                 {(password && repeatedPassword) && (
                                     <p className={`mt-2 text-sm ${password !== repeatedPassword ? "text-gray-400":"text-green-600"}`}>
-                                        {password === repeatedPassword ? '✔' : '•'} Password must match
+                                        {password === repeatedPassword ? '✔' : '•'}{t('register.formRules.passwordRule5')}
                                     </p>
                                 )}
 
@@ -174,7 +158,7 @@ export const RegisterPage = ()=> {
             </Card>
 
             {/* TERMS AND CONDITIONS MODAL */}
-            <Modal isOpen={openModal} onClose={()=>setOpenModal(false)}>
+            <Modal isOpen={openModal} onClose={()=>setOpenModal(false)} size="3xl">
                 <ModalHeader>
                     <h2 className="font-semibold capitalize">
                         {t("register.t&c")}
@@ -221,6 +205,7 @@ export const RegisterPage = ()=> {
                 <ModalFooter>
                     <Button
                         variant="neutral"
+                        onClick={()=>{setOpenModal(false)}}
                     >{t("defaults.close")}</Button>
                 </ModalFooter>
             </Modal>

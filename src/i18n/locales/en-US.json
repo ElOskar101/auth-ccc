@@ -24,13 +24,20 @@
     "passwordPlaceholder": "New password",
     "repeatPassword": "Repeat password",
     "repeatedPasswordPlaceholder": "Same password",
-    "passwordRule1": "Between 8 and 24 characters min",
-    "passwordRule2": "Must contain numbers and letters",
-    "passwordRule3": "Both passwords must match",
     "acceptThe": "I do accept ",
     "t&c": "terms and conditions",
     "createAccount": "Create account",
-    "backToLogin": "Back to login"
+    "backToLogin": "Back to login",
+    "formRules": {
+      "defaultRequired": "This field is required",
+      "usernameRule1": "Username too long",
+      "emailRule1": "Invalid e-mail address",
+      "passwordRule1": "Less than 25 characters",
+      "passwordRule2": "8 characters minimum",
+      "passwordRule3": "A number",
+      "passwordRule4": "A letter",
+      "passwordRule5": "Both passwords must match"
+    }
   },
   "t&c":{
     "createAccountTitle1": "By creating an account on Control Central you will be able to:",

@@ -1,10 +1,28 @@
 import { z } from 'zod'
 
 export const registerSchema = z.object({
-    username: z.string().min(1, "This file is required").max(24, "username too long").trim(),
-    password: z.string().min(8).max(24).trim().regex(/[0-9]/, 'Al menos un número').regex(/[a-zA-Z]/, 'Al menos un número'),
+    username: z.string().min(1, "register.formRules.defaultRequired").max(24, "register.formRules.usernameRule1").trim(),
+    password: z.string().min(8).max(24).trim().regex(/[0-9]/, 'register.formRules.passwordRule3').regex(/[a-zA-Z]/, 'register.formRules.passwordRule4'),
     repeatedPassword: z.string().min(8).max(24).trim(),
-    email: z.email('Invalid entered email').trim().max(68).trim(),
+    email: z.email('register.formRules.emailRule1').trim().max(68).trim(),
 });
+
+export const passwordRules = [
+    {
+        label: "register.formRules.passwordRule1",
+        test: (v: string) => v.length < 25,
+    },{
+        label: 'register.formRules.passwordRule2',
+        test: (v: string) => v.length >= 8,
+    },
+    {
+        label: 'register.formRules.passwordRule3',
+        test: (v: string) => /[0-9]/.test(v),
+    },
+    {
+        label: 'register.formRules.passwordRule4',
+        test: (v: string) => /[a-zA-Z]/.test(v),
+    }
+];
 
 export type RegisterFormData = z.infer<typeof registerSchema>;

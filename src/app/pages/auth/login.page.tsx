@@ -13,7 +13,10 @@ import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-s
 import {useLanguageContext} from "@/app/context/LanguageContext.tsx";
 import {InputPassword} from "@/app/components/ui/input-password.tsx";
 import {useForm} from "react-hook-form";
-import {RequiredFieldsMessage} from "@/app/pages/auth/components/required-fields-message.tsx";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "@/app/components/modal";
+import {IoCloseOutline} from "react-icons/io5";
+import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
+import {Spinner} from "@/app/components/ui/spinner.tsx";
 
 export const LoginPage = ()=> {
 
@@ -22,6 +25,7 @@ export const LoginPage = ()=> {
     const {currentApp, APPS, setCurrentApp} = useAppSelector();
     const { t } = useTranslation();
     const [formData, setFormData] = useState<LoginFormData>({username: "", password: ""});
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         mode: 'onChange',
@@ -72,11 +76,11 @@ export const LoginPage = ()=> {
                     }
                     {/* LoginPage Form */}
                     <form className="" noValidate onSubmit={onHandleLogin}>
-                        <fieldset className="space-y-5">
+                        <fieldset className="space-y-5" onClick={()=> setIsOpenModal(!isOpenModal)}>
                             <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{'Invalid credentials'}</p>
                             <div className="">
                                 <Label htmlFor="username">{t('login.username')}</Label>
-                                <Input className="focus:scale-110 transition-transform" type="text" id="username" name="username" autoComplete="username"
+                                <Input  autoFocus={true} type="text" id="username" name="username" autoComplete="username"
                                        onChange={handleChange}
                                        placeholder={t('login.usernamePlaceholder')} required/>
 
@@ -120,6 +124,35 @@ export const LoginPage = ()=> {
                     onSelect={(appInfo) => setCurrentApp(appInfo)}
                 />
             </section>
+
+            <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(!isOpenModal)} size="md">
+
+                <ModalHeader>
+                    <h2 className="font-semibold capitalize">
+                        Oscar Gonzalez
+                    </h2>
+
+                    <RoundedTinyButton className="cursor-pointer" onClick={()=> setIsOpenModal(false)}>
+                        <IoCloseOutline/>
+                    </RoundedTinyButton>
+                </ModalHeader>
+
+                <ModalBody >
+                    <Label className="mb-5">Insert Code:</Label>
+                    <div className="flex items-center gap-2">
+                        <Input
+                            autoFocus={true}
+                        >
+                        </Input>
+                        <Button variant="primary" onClick={()=> setIsOpenModal(false)}>
+                            <Spinner variant="white" />
+                            Aceptar
+                        </Button>
+                    </div>
+
+                </ModalBody>
+
+            </Modal>
         </PageWrapper>
     );
 }

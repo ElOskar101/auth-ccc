@@ -24,13 +24,20 @@
     "passwordPlaceholder": "Nueva contraseña",
     "repeatPassword": "Repetir contraseña",
     "repeatedPasswordPlaceholder": "Misma contraseña",
-    "passwordRule1": "Entre 8 y 24 caracteres",
-    "passwordRule2": "Debe contener números y letras",
-    "passwordRule3": "Deben coincidir ambas contraseñas",
     "acceptThe": "Acepto los ",
     "t&c": "términos y condiciones",
     "createAccount": "Crear cuenta",
-    "backToLogin": "Regresar a inicio de sesión"
+    "backToLogin": "Regresar a inicio de sesión",
+    "formRules": {
+      "defaultRequired": "Este campo es obligatorio",
+      "usernameRule1": "Nombre de usuario muy grande",
+      "emailRule1": "Dirección de correco electrónico no válida",
+      "passwordRule1": "Menos de 25 caracteres",
+      "passwordRule2": "Mínimo 8 caracteres",
+      "passwordRule3": "Un número",
+      "passwordRule4": "Una letra",
+      "passwordRule5": "Ambas contraseñas deben coincidir"
+    }
   },
   "t&c":{
     "createAccountTitle1": "Al crear una cuenta en Control Central podrás:",
