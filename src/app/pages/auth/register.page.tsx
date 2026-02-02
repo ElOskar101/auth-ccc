@@ -1,7 +1,6 @@
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
 import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/card";
 import {LogoImage} from "@/app/components/ui/logo-image.tsx";
-import {useAppSelector} from "@/app/hooks/useAppSelector.ts";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
 import {Modal, ModalHeader, ModalBody, ModalFooter} from "@/app/components/modal";
 import { IoCloseOutline } from "react-icons/io5";
@@ -16,12 +15,12 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {RegisterFormData, registerSchema, passwordRules} from "@/app/pages/auth/schema/register.schema.ts";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
-
-
+import {useAppSelectorContext} from "@/app/pages/context/AppSelectorContext.tsx";
+import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
 
 export const RegisterPage = ()=> {
-    const { currentApp } = useAppSelector();
     const {language} = useLanguageContext();
+    const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
     const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
     const form = useForm<RegisterFormData>({
@@ -34,7 +33,9 @@ export const RegisterPage = ()=> {
 
     useEffect(() => {
         void i18n.changeLanguage(language);
-    }, [language]);
+
+        void setCurrentApp(APPS[0] || currentApp);
+    }, [language, APPS]);
 
     const onHandleRegister = () => {
         return true;
@@ -50,13 +51,15 @@ export const RegisterPage = ()=> {
                     {currentApp && (
                         <>
                             <LogoImage
-                                src='/new-ccc-isolated-logo.svg'
+                                className={`${currentApp.type === 'dev' ? 'grayscale' : ''}`}
+                                src={currentApp.logo}
                                 alt={currentApp.id}
                                 width={100}
                             />
                         </>
                     )
                     }
+                    <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): ""}</p>
 
                 </CardHeader>
                 <CardBody>
@@ -149,7 +152,7 @@ export const RegisterPage = ()=> {
 
                         </fieldset>
                     </form>
-
+                    <AppSelector apps={APPS.filter(a => a.id !== 'orioris')} selectedAppId={currentApp && currentApp.id || ''} onSelect={(appInfo) => setCurrentApp(appInfo)}/>
                 </CardBody>
 
                 <CardFooter>
@@ -199,6 +202,7 @@ export const RegisterPage = ()=> {
                         <p>{t("t&c.createAccountClarification2")}</p>
                         <p>{t("t&c.createAccountClarification3")}</p>
                         <p>{t("t&c.createAccountClarification4")}</p>
+                        <p>{t("t&c.createAccountClarification5")}</p>
                     </div>
 
                 </ModalBody>

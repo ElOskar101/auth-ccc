@@ -5,12 +5,15 @@ import './i18n';
 import {App} from './App.tsx'
 import React from "react";
 import {LanguageProvider} from "@/app/context/LanguageContext.tsx";
+import {AppSelectorProvider} from "@/app/pages/context/AppSelectorContext.tsx";
 
 createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <BrowserRouter>
             <LanguageProvider>
-                <App/>
+                <AppSelectorProvider>
+                    <App/>
+                </AppSelectorProvider>
             </LanguageProvider>
         </BrowserRouter>
     </React.StrictMode>

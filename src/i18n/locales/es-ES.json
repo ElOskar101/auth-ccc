@@ -13,7 +13,9 @@
     "spanishLanguage": "Español",
     "englishLanguage": "English",
     "selectApplication": "Seleccionar aplicación",
-    "rightReserved": "Todos los derechos reservados."
+    "rightReserved": "Todos los derechos reservados.",
+    "insertTotpCode": "Insertar TOTP:",
+    "totpRule1": "6 dígitos requeridos"
   },
   "register":{
     "username": "Nombre de usuario",
@@ -37,7 +39,8 @@
       "passwordRule3": "Un número",
       "passwordRule4": "Una letra",
       "passwordRule5": "Ambas contraseñas deben coincidir"
-    }
+    },
+    "accountForDevelopersWarning": "Cuenta con fines de desarrollo únicamente"
   },
   "t&c":{
     "createAccountTitle1": "Al crear una cuenta en Control Central podrás:",
@@ -49,6 +52,7 @@
     "createAccountClarification2": "Una vez creada, la cuenta debe ser activada por el administrador: solicita a tu superior la activación de esta cuenta.",
     "createAccountClarification3": "Solicita a tu superior la clave de ingreso para tu área",
     "createAccountClarification4": "Para obtener una cuenta de desarrollo, contacta con el administrador. Si ya tienes una cuenta de desarrollo, selecciona la app de desarrollo en la esquina superior derecha de este sitio web",
+    "createAccountClarification5": "No se necesita una cuenta para usar Orioris Playground",
     "agreementTitle1": "Al crear tu cuenta en Control Central aceptas lo siguiente:",
     "agreementTopic1": "No compartirás tus credenciales de acceso (nadie, ni siquiera el administrador conocerá tu contraseña)",
     "agreementTopic2": "Usarás un correo brindado por la empresa",
@@ -57,7 +61,8 @@
     "agreementTopic5": ""
   },
   "defaults": {
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "accept": "Aceptar"
   }
 }
 

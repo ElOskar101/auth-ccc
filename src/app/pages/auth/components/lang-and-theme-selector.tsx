@@ -1,5 +1,5 @@
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
-import {IoMoonOutline} from "react-icons/io5";
+import {IoChevronBackSharp, IoMoonOutline} from "react-icons/io5";
 import {MdLightMode} from "react-icons/md";
 import {HiLanguage} from "react-icons/hi2";
 import {useTheme} from "@/app/hooks/useTheme.ts";

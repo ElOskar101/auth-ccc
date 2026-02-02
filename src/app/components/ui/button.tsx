@@ -1,11 +1,11 @@
 import React from "react";
 import { cn } from "@/app/libs/utils.ts"
 
-const baseStyle =   'cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-1 disabled:opacity-50 disabled:pointer-events-none';
+const baseStyle =   'cursor-pointer shadow-lg inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-1 disabled:opacity-50 disabled:pointer-events-none';
 
 const variants = {
     primary: 'bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-600',
-    neutral: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400 dark:bg-zinc-700 dark:text-gray-100 dark:hover:bg-zinc-600',
+    neutral: 'bg-gray-200 text-gray-700 hover:bg-gray-200 focus:ring-gray-400 dark:bg-zinc-700 dark:text-gray-100 dark:hover:bg-zinc-600',
     danger:  'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
 }
 

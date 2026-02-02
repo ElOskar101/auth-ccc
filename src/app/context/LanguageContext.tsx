@@ -1,4 +1,4 @@
-import React, {createContext, useContext, ReactNode} from "react";
+import {createContext, useContext, ReactNode} from "react";
 import {useLanguage as useLanguageLogic} from "@/app/hooks/useLanguage.ts";
 
 interface LanguageContextType {
@@ -20,7 +20,7 @@ export const LanguageProvider = ({children}: {children: ReactNode}) => {
 export const useLanguageContext = () => {
     const context = useContext(LanguageContext);
     if (!context) {
-        throw new Error("useLanguageContext debe usarse dentro de un LanguageProvider");
+        throw new Error("useLanguageContext should be used inside of a language Provider");
     }
     return context;
 };

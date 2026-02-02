@@ -13,7 +13,9 @@
     "spanishLanguage": "Español",
     "englishLanguage": "English",
     "selectApplication": "Select application",
-    "rightReserved": "All rights reserved."
+    "rightReserved": "All rights reserved.",
+    "insertTotpCode": "Insert TOTP:",
+    "totpRule1": "6 digits required"
   },
   "register":{
     "username": "Username",
@@ -37,7 +39,8 @@
       "passwordRule3": "A number",
       "passwordRule4": "A letter",
       "passwordRule5": "Both passwords must match"
-    }
+    },
+    "accountForDevelopersWarning": "Account for development purposes only"
   },
   "t&c":{
     "createAccountTitle1": "By creating an account on Control Central you will be able to:",
@@ -49,6 +52,7 @@
     "createAccountClarification2": "Once created, the account must be activated by the administrator: ask your superior to activate your account.",
     "createAccountClarification3": "Request the login code for your area from your supervisor.",
     "createAccountClarification4": "To get a developer account, contact the administrator. If you already have a developer account, select the developer app in the upper right corner of this website.",
+    "createAccountClarification5": "You do not need any account for Orioris Playground",
     "agreementTitle1": "By creating your account on Control Central you agree to the following:",
     "agreementTopic1": "You will not share your login credentials (no one, not even the administrator, should know your password)",
     "agreementTopic2": "You will use an email address provided by the company",
@@ -56,7 +60,8 @@
     "agreementTopic4": "You will use two-factor authentication (an app is required to authenticate)"
   },
   "defaults": {
-    "close": "Close"
+    "close": "Close",
+    "accept": "Accept"
   }
 }
 

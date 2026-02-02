@@ -18,7 +18,7 @@ export const AppSelector = ({apps,
                 {/*<p className="text-center text-lg font-semibold text-gray-700 py-2 dark:text-zinc-50">{t('login.selectApplication')}</p>*/}
                 <div className="flex-col flex items-center">
                     {
-                        apps.map((app) => (
+                        apps.filter(a=>a.type === 'prod').map((app) => (
                             <AppSelectorItem
                                 key={app.id}
                                 app={app}
