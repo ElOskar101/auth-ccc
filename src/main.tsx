@@ -5,7 +5,7 @@ import './i18n';
 import {App} from './App.tsx'
 import React from "react";
 import {LanguageProvider} from "@/app/context/LanguageContext.tsx";
-import {AppSelectorProvider} from "@/app/pages/context/AppSelectorContext.tsx";
+import {AppSelectorProvider} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 
 createRoot(document.getElementById('root')).render(
     <React.StrictMode>

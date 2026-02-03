@@ -18,6 +18,8 @@
     "totpRule1": "6 digits required"
   },
   "register":{
+    "fullName": "Name and last name",
+    "fullNamePlaceholder": "John Doe",
     "username": "Username",
     "usernamePlaceholder": "Unique username",
     "email": "E-mail",
@@ -33,12 +35,15 @@
     "formRules": {
       "defaultRequired": "This field is required",
       "usernameRule1": "Username too long",
+      "fullNameRule1": "Name too long",
+      "fullNameRule2": "Only letters allowed",
       "emailRule1": "Invalid e-mail address",
       "passwordRule1": "Less than 25 characters",
       "passwordRule2": "8 characters minimum",
       "passwordRule3": "A number",
       "passwordRule4": "A letter",
-      "passwordRule5": "Both passwords must match"
+      "passwordRule5": "Both passwords must match",
+      "passwordRule6": "No spaces allowed"
     },
     "accountForDevelopersWarning": "Account for development purposes only"
   },

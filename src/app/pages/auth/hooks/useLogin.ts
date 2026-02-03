@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import {LoginFormData} from "@/app/pages/auth/schema/login.schema.ts";
 import {createLogin, createUserInfoRequest} from "@/app/pages/auth/services/login.service.ts";
-import {useAppSelectorContext} from "@/app/pages/context/AppSelectorContext.tsx";
+import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
 
 interface LoginResponse {

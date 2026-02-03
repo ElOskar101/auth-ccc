@@ -18,6 +18,8 @@
     "totpRule1": "6 dígitos requeridos"
   },
   "register":{
+    "fullName": "Nombre y apellido",
+    "fullNamePlaceholder": "Juan Pérez",
     "username": "Nombre de usuario",
     "usernamePlaceholder": "Usuario único",
     "email": "Correo electrónico",
@@ -33,12 +35,15 @@
     "formRules": {
       "defaultRequired": "Este campo es obligatorio",
       "usernameRule1": "Nombre de usuario muy grande",
+      "fullNameRule1": "Nombre completo muy grande",
+      "fullNameRule2": "Solo se permiten letras",
       "emailRule1": "Dirección de correco electrónico no válida",
       "passwordRule1": "Menos de 25 caracteres",
       "passwordRule2": "Mínimo 8 caracteres",
       "passwordRule3": "Un número",
       "passwordRule4": "Una letra",
-      "passwordRule5": "Ambas contraseñas deben coincidir"
+      "passwordRule5": "Ambas contraseñas deben coincidir",
+      "passwordRule6": "No se permiten espacios"
     },
     "accountForDevelopersWarning": "Cuenta con fines de desarrollo únicamente"
   },

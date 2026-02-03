@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {useAppSelectorContext} from "@/app/pages/context/AppSelectorContext.tsx";
+import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 export const Footer = () => {
     const { t } = useTranslation();
@@ -8,10 +8,13 @@ export const Footer = () => {
     return (
         <footer className="w-full bg-gray-50 border-t border-gray-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400 text-gray-500 p-3 mt-3 shadow-xl text-sm rounded-xl">
             <div className="flex justify-between">
-                <div className="flex self-center tracking-wide">
+
+                <div className="tracking-wider content-center">
                     <span>© {new Date().getFullYear()} DentalRobot. </span>
                     <span>{` ${t('login.rightReserved')}`}</span>
                 </div>
+
+
                 <div className="flex gap-3">
 
                     <div className="flex self-center tracking-wide">

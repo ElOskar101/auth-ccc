@@ -15,12 +15,17 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {RegisterFormData, registerSchema, passwordRules} from "@/app/pages/auth/schema/register.schema.ts";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
-import {useAppSelectorContext} from "@/app/pages/context/AppSelectorContext.tsx";
+import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
+import {useRegister} from "@/app/pages/auth/hooks/useRegister.ts";
+import {Spinner} from "@/app/components/ui/spinner.tsx";
+import {useNavigate} from "react-router-dom";
 
 export const RegisterPage = ()=> {
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
+    const {executeRegister, isLoading, error} = useRegister();
+    const navigate = useNavigate();
     const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
     const form = useForm<RegisterFormData>({
@@ -34,16 +39,21 @@ export const RegisterPage = ()=> {
     useEffect(() => {
         void i18n.changeLanguage(language);
 
-        void setCurrentApp(APPS[0] || currentApp);
+        if (currentApp?.id === 'orioris' && APPS.length > 0)
+            void setCurrentApp(APPS[0] || currentApp);
     }, [language, APPS]);
 
-    const onHandleRegister = () => {
-        return true;
+    const onHandleRegister = async (data: RegisterFormData) => {
+        const result = await executeRegister(data);
+        if (result){
+            form.reset();
+            navigate('/login', {replace: true} );
+        }
     }
 
     return (
         <PageWrapper>
-            <Card>
+            <Card size="2xl">
                 <CardHeader>
                     <div className="flex">
                         <LangAndThemeSelector/>
@@ -59,83 +69,100 @@ export const RegisterPage = ()=> {
                         </>
                     )
                     }
-                    <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): ""}</p>
-
+                    <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): error ? error : ""}</p>
                 </CardHeader>
-                <CardBody>
+                <CardBody onClick={()=>{console.log(form.formState.errors, form.formState.isValid)}}>
                     <form noValidate onSubmit={form.handleSubmit(onHandleRegister)} >
                         <fieldset className="space-y-3">
-                            <div className="">
+                            <div className="" >
                                 <Label
-                                    htmlFor="username"
-                                >{t('register.username')}</Label>
+                                    htmlFor="fullName"
+                                >{t('register.fullName')}</Label>
                                 <Input
                                     autoFocus={true}
-                                    id="username"
-                                    {...form.register('username')}
-                                    placeholder={t('register.usernamePlaceholder')}
+                                    id="fullName"
+                                    {...form.register('fullName')}
+                                    placeholder={t('register.fullNamePlaceholder')}
                                 />
-                                {form.formState.errors.username?.message && (
-                                    <RequiredFieldsMessage>{t(form.formState.errors.username.message)}</RequiredFieldsMessage>
+                                {form.formState.errors.fullName?.message && (
+                                    <RequiredFieldsMessage>{t(form.formState.errors.fullName.message)}</RequiredFieldsMessage>
                                 )}
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="">
+                                    <Label
+                                        htmlFor="username"
+                                    >{t('register.username')}</Label>
+                                    <Input
+                                        id="username"
+                                        {...form.register('username')}
+                                        placeholder={t('register.usernamePlaceholder')}
+                                    />
+                                    {form.formState.errors.username?.message && (
+                                        <RequiredFieldsMessage>{t(form.formState.errors.username.message)}</RequiredFieldsMessage>
+                                    )}
+                                </div>
+                                <div className="">
+                                    <Label
+                                        htmlFor="email"
+                                    >{t('register.email')}</Label>
+                                    <Input
+                                        id="email"
+                                        {...form.register('email')}
+                                        placeholder={t('register.emailPlaceholder')}
+                                    />
+                                    {form.formState.errors.email?.message && (
+                                        <RequiredFieldsMessage>{t(form.formState.errors.email.message)}</RequiredFieldsMessage>
+                                    )}
+                                </div>
 
                             </div>
 
-                            <div className="">
-                                <Label
-                                    htmlFor="email"
-                                >{t('register.email')}</Label>
-                                <Input
-                                    id="email"
-                                    {...form.register('email')}
-                                    placeholder={t('register.emailPlaceholder')}
-                                />
-                                {form.formState.errors.email?.message && (
-                                    <RequiredFieldsMessage>{t(form.formState.errors.email.message)}</RequiredFieldsMessage>
-                                )}
-                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="">
+                                    <Label
+                                        htmlFor="password"
+                                    >{t('register.password')}</Label>
+                                    <InputPassword
+                                        {...form.register('password')}
+                                        placeholder={t('register.passwordPlaceholder')}/>
+                                    <ul className="mt-2 space-y-1 text-sm">
+                                        {passwordRules.map(rule => {
+                                            const valid = rule.test(password);
+                                            return (
+                                                <li
+                                                    key={rule.label}
+                                                    className={valid ? 'text-green-600 dark:text-green-500' : 'text-gray-400'}
+                                                >
+                                                    {valid ? '✔' : '•'} {t(rule.label)}
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
+                                <div className="">
+                                    <Label
+                                        htmlFor="repeated-password"
+                                    >{t('register.repeatPassword')}</Label>
+                                    <InputPassword
+                                        id="repeatedPassword"
+                                        {...form.register('repeatedPassword')}
+                                        placeholder={t('register.repeatedPasswordPlaceholder')}
+                                    />
+                                    {(password && repeatedPassword) && (
+                                        <p className={`mt-2 text-sm ${password !== repeatedPassword ? "text-gray-400":"text-green-600"}`}>
+                                            {password === repeatedPassword ? '✔' : '•'}{t('register.formRules.passwordRule5')}
+                                        </p>
+                                    )}
 
-                            <div className="">
-                                <Label
-                                    htmlFor="password"
-                                >{t('register.password')}</Label>
-                                <InputPassword
-                                    {...form.register('password')}
-                                    placeholder={t('register.passwordPlaceholder')}/>
-                                <ul className="mt-2 space-y-1 text-sm">
-                                    {passwordRules.map(rule => {
-                                        const valid = rule.test(password);
-                                        return (
-                                            <li
-                                                key={rule.label}
-                                                className={valid ? 'text-green-600 dark:text-green-500' : 'text-gray-400'}
-                                            >
-                                                {valid ? '✔' : '•'} {t(rule.label)}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </div>
-
-                            <div className="">
-                                <Label
-                                    htmlFor="repeated-password"
-                                >{t('register.repeatPassword')}</Label>
-                                <InputPassword
-                                    id="repeatedPassword"
-                                    {...form.register('repeatedPassword')}
-                                    placeholder={t('register.repeatedPasswordPlaceholder')}
-                                />
-                                {(password && repeatedPassword) && (
-                                    <p className={`mt-2 text-sm ${password !== repeatedPassword ? "text-gray-400":"text-green-600"}`}>
-                                        {password === repeatedPassword ? '✔' : '•'}{t('register.formRules.passwordRule5')}
-                                    </p>
-                                )}
-
+                                </div>
                             </div>
 
                             <div className="flex gap-1">
-                                <input type="checkbox" checked={termsAndConditionsAccepted} onChange={()=>{setTermsAndConditionsAccepted(!termsAndConditionsAccepted)}}/>
+
+                                <input type="checkbox"
+                                       checked={termsAndConditionsAccepted}
+                                       onChange={()=>{setTermsAndConditionsAccepted(!termsAndConditionsAccepted)}}/>
                                 <p className="text-gray-500 dark:text-gray-50">{t("register.acceptThe")}
                                     <LinkButton href={'#'} action={()=>setOpenModal(true)}>{t("register.t&c")}</LinkButton>
                                 </p>
@@ -143,12 +170,12 @@ export const RegisterPage = ()=> {
 
 
                             <Button
-                                disabled={!termsAndConditionsAccepted || !form.formState.isValid}
+                                disabled={!termsAndConditionsAccepted || !form.formState.isValid || isLoading}
                                 type="submit"
                                 role="button"
                                 className="w-full"
                                 variant="primary"
-                            >{t('register.createAccount')}</Button>
+                            >{isLoading && <Spinner variant="white"/>}{t('register.createAccount')}</Button>
 
                         </fieldset>
                     </form>

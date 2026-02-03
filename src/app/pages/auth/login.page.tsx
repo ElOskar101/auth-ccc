@@ -18,8 +18,9 @@ import {IoCloseOutline} from "react-icons/io5";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 import {Spinner} from "@/app/components/ui/spinner.tsx";
 import {InputTOTP} from "@/app/components/ui/totp-input-masked.tsx";
-import {useAppSelectorContext} from "@/app/pages/context/AppSelectorContext.tsx";
+import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {useLogin, UserInterface} from "@/app/pages/auth/hooks/useLogin.ts";
+import {ToastNotification} from "@/app/components/ui/toast-notification.tsx";
 
 export const LoginPage = ()=> {
 
@@ -57,6 +58,7 @@ export const LoginPage = ()=> {
     return (
 
         <PageWrapper>
+            <ToastNotification/>
             <section className="relatve flex flex-row max-w-md w-full mt-3">
                 <div className=" flex-none w-full max-w-md shadow-md rounded-xl bg-white border border-gray-50 dark:bg-zinc-800 dark:border-zinc-600 p-4">
                     {/* Theme Toggle Button */}
