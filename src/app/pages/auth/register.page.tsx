@@ -20,6 +20,7 @@ import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
 import {useRegister} from "@/app/pages/auth/hooks/useRegister.ts";
 import {Spinner} from "@/app/components/ui/spinner.tsx";
 import {useNavigate} from "react-router-dom";
+import {toast} from "sonner";
 
 export const RegisterPage = ()=> {
     const {language} = useLanguageContext();
@@ -44,10 +45,11 @@ export const RegisterPage = ()=> {
     }, [language, APPS]);
 
     const onHandleRegister = async (data: RegisterFormData) => {
+        const toastId = toast.loading('Creating Account...');
         const result = await executeRegister(data);
         if (result){
+            toast.success('Account created successfully', {id: toastId, action: {label:t('register.goToLogin'), onClick: () => navigate('/login', {replace: true})}});
             form.reset();
-            navigate('/login', {replace: true} );
         }
     }
 
@@ -174,7 +176,7 @@ export const RegisterPage = ()=> {
                                 type="submit"
                                 role="button"
                                 className="w-full"
-                                variant="primary"
+                                variant={currentApp?.type === "dev" ? "neutral" : "primary"}
                             >{isLoading && <Spinner variant="white"/>}{t('register.createAccount')}</Button>
 
                         </fieldset>

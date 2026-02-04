@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import { zodResolver } from '@hookform/resolvers/zod';
 import i18n from 'i18next';
+import { toast } from 'sonner'
 import {LoginFormData, loginSchema} from "@/app/pages/auth/schema/login.schema.ts";
 import {TotpForm, totpSchema} from "@/app/pages/auth/schema/totp.schema.ts";
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
@@ -20,7 +21,6 @@ import {Spinner} from "@/app/components/ui/spinner.tsx";
 import {InputTOTP} from "@/app/components/ui/totp-input-masked.tsx";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {useLogin, UserInterface} from "@/app/pages/auth/hooks/useLogin.ts";
-import {ToastNotification} from "@/app/components/ui/toast-notification.tsx";
 
 export const LoginPage = ()=> {
 
@@ -44,21 +44,22 @@ export const LoginPage = ()=> {
         void i18n.changeLanguage(language);
     }, [language]);
 
+    useEffect(() => {
+        if (error)
+            toast.warning(error);
+    }, [error]);
+
     const onHandleLogin = async (data: LoginFormData) => {
         const result = await executeLogin(data);
-        if (!result) return;
         const user = await executeGetUserInfo(result.token);
         if (user){
             setIsOpenModal(true);
             setUser(user as UserInterface);
         }
     }
-
-
     return (
 
         <PageWrapper>
-            <ToastNotification/>
             <section className="relatve flex flex-row max-w-md w-full mt-3">
                 <div className=" flex-none w-full max-w-md shadow-md rounded-xl bg-white border border-gray-50 dark:bg-zinc-800 dark:border-zinc-600 p-4">
                     {/* Theme Toggle Button */}
@@ -77,7 +78,7 @@ export const LoginPage = ()=> {
                     }
                     {/* LoginPage Form */}
                     <form className="" noValidate onSubmit={form.handleSubmit(onHandleLogin)}>
-                        <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{error || ' '}</p>
+                        {/*<p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{error || ' '}</p>*/}
                         <fieldset className="space-y-5">
                             <div className="">
                                 <Label htmlFor="username">{t('login.username')}</Label>
@@ -106,6 +107,7 @@ export const LoginPage = ()=> {
                                     <Button
                                         disabled={!form.formState.isValid || isLoading}
                                         className="w-full"
+                                        variant={currentApp?.type === "dev" ? "neutral" : "primary"}
                                         type="submit">
                                         <Spinner variant="white" hidden={!isLoading} />
                                         {t('login.logIn')}

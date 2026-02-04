@@ -32,6 +32,7 @@
     "t&c": "términos y condiciones",
     "createAccount": "Crear cuenta",
     "backToLogin": "Regresar a inicio de sesión",
+    "goToLogin": "Iniciar sesión",
     "formRules": {
       "defaultRequired": "Este campo es obligatorio",
       "usernameRule1": "Nombre de usuario muy grande",

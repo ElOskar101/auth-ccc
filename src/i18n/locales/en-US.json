@@ -32,6 +32,7 @@
     "t&c": "terms and conditions",
     "createAccount": "Create account",
     "backToLogin": "Back to login",
+    "goToLogin": "Go to login",
     "formRules": {
       "defaultRequired": "This field is required",
       "usernameRule1": "Username too long",
