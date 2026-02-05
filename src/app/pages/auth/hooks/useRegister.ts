@@ -1,15 +1,11 @@
 import React, {useMemo} from "react";
-import {RegisterFormData} from "@/app/pages/auth/schema/register.schema.ts";
-import {createRegister} from "@/app/pages/auth/services/register.service.ts";
+import {RegisterFormData, ForgotPasswordFormData} from "@/app/pages/auth/schema/register.schema.ts";
+import {createChangePassword, createRegister} from "@/app/pages/auth/services/register.service.ts";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
 
-
-export interface UserRegisterInterface {
-    password: string;
-    username: string;
+interface ChangePasswordInterface extends ForgotPasswordFormData {
     email: string;
-    fullName: string;
 }
 
 export const useRegister = () => {
@@ -20,10 +16,12 @@ export const useRegister = () => {
     const http = useMemo(() =>
         createHttpClient(currentApp?.apiUrl || ''), [currentApp?.apiUrl])
 
-    const registerService = useMemo(() =>
-        createRegister(http)
+    const registerService = useMemo(() => {
+            const createRegisterService = createRegister(http)
+            const createChangePasswordService = createChangePassword(http)
+            return {...createRegisterService, ...createChangePasswordService}
+        }
         , [http])
-
 
 
     const executeRegister = async (data: RegisterFormData) => {
@@ -31,7 +29,20 @@ export const useRegister = () => {
         setError(null)
 
         try {
-            return await registerService.register(data) as UserRegisterInterface;
+            return await registerService.register(data);
+        } catch (err: any) {
+            setError(err.message)
+            throw err
+        } finally {
+            setIsLoading(false)
+        }
+    }
+    const executeChangePassword = async (data: ChangePasswordInterface) => {
+        setIsLoading(true)
+        setError(null)
+
+        try {
+            return await registerService.changePassword(data);
         } catch (err: any) {
             setError(err.message)
             throw err
@@ -43,6 +54,7 @@ export const useRegister = () => {
 
     return {
         executeRegister,
+        executeChangePassword,
         isLoading,
         error
     }

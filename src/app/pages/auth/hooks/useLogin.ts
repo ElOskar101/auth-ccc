@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import {LoginFormData} from "@/app/pages/auth/schema/login.schema.ts";
-import {createLogin, createUserInfoRequest} from "@/app/pages/auth/services/login.service.ts";
+import {createLogin, createRecoverPassword, createUserInfoRequest} from "@/app/pages/auth/services/login.service.ts";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
 
@@ -27,9 +27,11 @@ export const useLogin = () => {
     const authService = useMemo(() => {
         const loginService = createLogin(http)
         const userService = createUserInfoRequest(http)
+        const recoverService = createRecoverPassword(http)
         return {
             ...loginService,
             ...userService,
+            ...recoverService
         }}, [http])
 
 
@@ -40,6 +42,20 @@ export const useLogin = () => {
 
         try {
             return await authService.login(data) as LoginResponse;
+        } catch (err: any) {
+            setError(err.message)
+            throw err
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const executeRecover = async (email: string) => {
+        setIsLoading(true)
+        setError(null)
+
+        try {
+            return await authService.recover(email) as { message: string };
         } catch (err: any) {
             setError(err.message)
             throw err
@@ -65,6 +81,7 @@ export const useLogin = () => {
     return {
         executeLogin,
         executeGetUserInfo,
+        executeRecover,
         isLoading,
         error
     }

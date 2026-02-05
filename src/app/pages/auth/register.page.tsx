@@ -21,6 +21,7 @@ import {useRegister} from "@/app/pages/auth/hooks/useRegister.ts";
 import {Spinner} from "@/app/components/ui/spinner.tsx";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
+import {PasswordRule} from "@/app/components/ui/password-rules.tsx";
 
 export const RegisterPage = ()=> {
     const {language} = useLanguageContext();
@@ -128,19 +129,8 @@ export const RegisterPage = ()=> {
                                     <InputPassword
                                         {...form.register('password')}
                                         placeholder={t('register.passwordPlaceholder')}/>
-                                    <ul className="mt-2 space-y-1 text-sm">
-                                        {passwordRules.map(rule => {
-                                            const valid = rule.test(password);
-                                            return (
-                                                <li
-                                                    key={rule.label}
-                                                    className={valid ? 'text-green-600 dark:text-green-500' : 'text-gray-400'}
-                                                >
-                                                    {valid ? '✔' : '•'} {t(rule.label)}
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
+                                    <PasswordRule password={password}/>
+
                                 </div>
                                 <div className="">
                                     <Label
@@ -172,7 +162,7 @@ export const RegisterPage = ()=> {
 
 
                             <Button
-                                disabled={!termsAndConditionsAccepted || !form.formState.isValid || isLoading}
+                                disabled={!termsAndConditionsAccepted || !form.formState.isValid || isLoading || (password !== repeatedPassword)}
                                 type="submit"
                                 role="button"
                                 className="w-full"

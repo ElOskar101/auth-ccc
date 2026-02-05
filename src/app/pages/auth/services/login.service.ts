@@ -16,6 +16,17 @@ export const createLogin = (http: HttpClient) => {
     }
 }
 
+export const createRecoverPassword = (http: HttpClient) => {
+
+    return {
+        recover: (email: string) =>
+            http('/api/recover', {
+                method: 'POST',
+                body: JSON.stringify({email}),
+            }),
+    }
+}
+
 export const createUserInfoRequest = (http: HttpClient) => {
 
     return {

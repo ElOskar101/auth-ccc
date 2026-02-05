@@ -9,7 +9,7 @@ export const InputPassword = (props: React.InputHTMLAttributes<HTMLInputElement>
             <input
                 type={isVisiblePassword ? 'text' : 'password'} id="password" name="password" autoComplete="current-password"
                 {...props}
-                className={`text-lg p-1 text-gray-700 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-50 focus:ring-0 ${props.className}`}
+                className={`mt-1 text-lg p-1 text-gray-700 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-50 focus:ring-0 ${props.className}`}
             />
             <button
                 type="button"

@@ -1,9 +1,11 @@
 import { Label, Input, Button, LinkButton } from "../../components/ui/";
 import {useNavigate} from "react-router-dom";
 import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'react-router-dom';
 import i18n from 'i18next';
 import { toast } from 'sonner'
 import {LoginFormData, loginSchema} from "@/app/pages/auth/schema/login.schema.ts";
@@ -25,12 +27,18 @@ import {useLogin, UserInterface} from "@/app/pages/auth/hooks/useLogin.ts";
 export const LoginPage = ()=> {
 
     const navigate = useNavigate();
-    const {isLoading, executeLogin, executeGetUserInfo, error} = useLogin();
+    const {isLoading, executeLogin, executeGetUserInfo, executeRecover, error} = useLogin();
+    const [email, setEmail] = useState('');
     const [user, setUser] = useState<UserInterface>({} as UserInterface);
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
+    const redirect = searchParams.get('redirect') || '/';
+    const comesFrom = location.state?.from?.pathname ?? '/'
     const { t } = useTranslation();
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+    const [isLostPasswordOpenModal, setIsLostPasswordOpenModal] = useState<boolean>(false);
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         mode: 'onChange',
@@ -57,6 +65,16 @@ export const LoginPage = ()=> {
             setUser(user as UserInterface);
         }
     }
+
+    const handleRecover = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (email.length == 0 || !/\S+@\S+\.\S+/.test(email)) return;
+        executeRecover(email).then(async () => {
+            toast.success('email sent successfully');
+        })
+
+    }
+
     return (
 
         <PageWrapper>
@@ -97,7 +115,7 @@ export const LoginPage = ()=> {
                                     <Button
                                         disabled={(!form.formState.isValid && currentApp?.id !== 'orioris') || isLoading}
                                         className="justify-endr"
-                                        variant="neutral"
+                                        variant="primary"
                                         type="button"
                                         onClick={() => navigate(currentApp?.url || '/')}>
                                         <Spinner variant="white" hidden={!isLoading} />
@@ -127,7 +145,7 @@ export const LoginPage = ()=> {
                         </div>
                         <div className="flex gap-2">
                             <p className="text-gray-700 dark:text-gray-50">{t('login.haveLostTheirPassword')}</p>
-                            <LinkButton href="/forgot-password">
+                            <LinkButton action={()=> setIsLostPasswordOpenModal(true)}>
                                 {t('login.resetPassword')}
                             </LinkButton>
 
@@ -179,6 +197,41 @@ export const LoginPage = ()=> {
                         </Button>
                     </div>
 
+                </ModalBody>
+
+            </Modal>
+            {/* Lost password modal */}
+            <Modal isOpen={isLostPasswordOpenModal} onClose={() => setIsLostPasswordOpenModal(!isLostPasswordOpenModal)} size="md">
+                <ModalHeader>
+
+                    <p className="font-semibold capitalize self-center">
+                        reset your password
+                    </p>
+                    <RoundedTinyButton className="cursor-pointer" onClick={()=> setIsLostPasswordOpenModal(false)}>
+                        <IoCloseOutline/>
+                    </RoundedTinyButton>
+                </ModalHeader>
+
+                <ModalBody>
+                    <form onSubmit={handleRecover}>
+                        <fieldset>
+                            <Label htmlFor="email">Insert E-mail</Label>
+                            <div className="flex gap-2">
+                                <Input
+                                    type="email"
+                                    id="email"
+                                    required
+                                    placeholder="correo"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    autoFocus/>
+                                <Button disabled={email.length == 0 || !/\S+@\S+\.\S+/.test(email) || isLoading} type="submit" variant="primary">
+                                    <Spinner variant="white" hidden={!isLoading} />
+                                    {t('defaults.accept')}
+                                </Button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <p className="py-4 text-blue-500">Check your e-mail and fallow the instructions</p>
                 </ModalBody>
 
             </Modal>

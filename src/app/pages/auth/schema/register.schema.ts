@@ -42,6 +42,24 @@ export const registerSchema = z.object({
         .trim(),
 });
 
+export const forgotPasswordSchema = z.object({
+    password: z.string()
+        .min(8)
+        .max(24)
+        .trim()
+        .regex(/[0-9]/, 'register.formRules.passwordRule3')
+        .regex(/[a-zA-Z]/, 'register.formRules.passwordRule4').refine(
+            (value) => !/\s/.test(value),
+            {
+                message: "register.formRules.usernameRule6",
+            }
+        ),
+    repeatedPassword: z.string()
+        .min(8)
+        .max(24)
+        .trim()
+});
+
 export const passwordRules = [
     {
         label: "register.formRules.passwordRule1",
@@ -65,3 +83,4 @@ export const passwordRules = [
 ];
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
+export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
