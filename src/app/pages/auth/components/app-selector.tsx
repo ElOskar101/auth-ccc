@@ -11,12 +11,13 @@ interface AppSelectorProps {
 export const AppSelector = ({apps,
                                 selectedAppId,
                                 onSelect}: AppSelectorProps) => {
-    //const { t } = useTranslation();
+    //
+    //flex-col flex items-center
     return (
-        <div className="fixed right-0 inset-y-1/3 mr-2">
+        <div className="flex-1 sm:fixed sm:right-0 sm:inset-y-1/3 sm:mr-2">
             <div className="bg-white shadow-lg border border-gray-100 dark:border-zinc-600 dark:bg-zinc-800 rounded-full ml-3">
                 {/*<p className="text-center text-lg font-semibold text-gray-700 py-2 dark:text-zinc-50">{t('login.selectApplication')}</p>*/}
-                <div className="flex-col flex items-center">
+                <div className="flex sm:flex-col">
                     {
                         apps.filter(a=>a.type === 'prod').map((app) => (
                             <AppSelectorItem

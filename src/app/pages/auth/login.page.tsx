@@ -61,7 +61,7 @@ export const LoginPage = ()=> {
         executeLogin(data).then(
             (result)=>{
                 if (currentApp)
-                    navigate(`${currentApp?.url}#/?key=${btoa(result.token)}`)
+                    navigate(`${currentApp?.url}#/{${redirect}/?key=${btoa(result.token)}`)
                 /*
                 For TOTP operations
                 executeGetUserInfo(data.token).then(
@@ -92,7 +92,7 @@ export const LoginPage = ()=> {
 
     return (
         <PageWrapper>
-            <section className="relatve flex flex-row max-w-md w-full mt-3">
+            <section className="flex flex-col space-y-5 sm:flex-row max-w-md w-full mt-3">
 
                 <Card>
                     <CardHeader>
