@@ -14,7 +14,7 @@ export const AppSelector = ({apps,
     //
     //flex-col flex items-center
     return (
-        <div className="flex-1 sm:fixed sm:right-0 sm:inset-y-1/3 sm:mr-2">
+        <div className="flex-1 sm:fixed sm:end-0 sm:top-1/2 sm:-translate-y-1/2 sm:m-2">
             <div className="bg-white shadow-lg border border-gray-100 dark:border-zinc-600 dark:bg-zinc-800 rounded-full ml-3">
                 {/*<p className="text-center text-lg font-semibold text-gray-700 py-2 dark:text-zinc-50">{t('login.selectApplication')}</p>*/}
                 <div className="flex sm:flex-col">
