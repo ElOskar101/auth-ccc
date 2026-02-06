@@ -56,6 +56,7 @@ export const RegisterPage = ()=> {
 
     return (
         <PageWrapper>
+            <section className="flex flex-col space-y-5 sm:flex-row max-w-md w-full mt-3">
             <Card size="2xl">
                 <CardHeader>
                     <div className="flex">
@@ -171,14 +172,14 @@ export const RegisterPage = ()=> {
 
                         </fieldset>
                     </form>
-                    <AppSelector apps={APPS.filter(a => a.id !== 'orioris')} selectedAppId={currentApp && currentApp.id || ''} onSelect={(appInfo) => setCurrentApp(appInfo)}/>
                 </CardBody>
-
                 <CardFooter>
                     <LinkButton href='/login' options={{replace: true}}>{t('register.backToLogin')}</LinkButton>
                 </CardFooter>
             </Card>
 
+            <AppSelector apps={APPS.filter(a => a.id !== 'orioris')} selectedAppId={currentApp && currentApp.id || ''} onSelect={(appInfo) => setCurrentApp(appInfo)}/>
+            </section>
             {/* TERMS AND CONDITIONS MODAL */}
             <Modal isOpen={openModal} onClose={()=>setOpenModal(false)} size="3xl">
                 <ModalHeader>
