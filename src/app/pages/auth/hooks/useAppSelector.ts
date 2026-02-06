@@ -16,7 +16,7 @@ const APPS: AppInfo[] = [
         name: 'Incidents',
         logo: '/new-incidents-logo.svg',
         type: 'prod',
-        url:"https://incidents.controlcentralcarrier.com/#/",
+        url:"https://incidents.controlcentralcarrier.com/",
         apiUrl:"https://carriers.dentalautomation.ai/"
     },
     {

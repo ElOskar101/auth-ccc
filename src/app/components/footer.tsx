@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
+
 export const Footer = () => {
     const { t } = useTranslation();
     const {currentApp, setCurrentApp, APPS} = useAppSelectorContext();
@@ -13,13 +14,10 @@ export const Footer = () => {
                     <span>© {new Date().getFullYear()} DentalRobot. </span>
                     <span>{` ${t('login.rightReserved')}`}</span>
                 </div>
-
-
                 <div className="flex gap-3">
-
                     <div className="flex self-center tracking-wide">
                         <p className="">
-                            dev apps:
+                            {t('login.devEnv')}:
                         </p>
                     </div>
 

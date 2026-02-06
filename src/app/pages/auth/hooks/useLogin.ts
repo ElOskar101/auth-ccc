@@ -18,7 +18,6 @@ export interface UserInterface {
 
 export const useLogin = () => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<string | null>(null);
     const { currentApp } = useAppSelectorContext()
 
     const http = useMemo(() =>
@@ -38,12 +37,10 @@ export const useLogin = () => {
 
     const executeLogin = async (data: LoginFormData) => {
         setIsLoading(true)
-        setError(null)
 
         try {
             return await authService.login(data) as LoginResponse;
         } catch (err: any) {
-            setError(err.message)
             throw err
         } finally {
             setIsLoading(false)
@@ -52,12 +49,10 @@ export const useLogin = () => {
 
     const executeRecover = async (email: string) => {
         setIsLoading(true)
-        setError(null)
 
         try {
             return await authService.recover(email) as { message: string };
         } catch (err: any) {
-            setError(err.message)
             throw err
         } finally {
             setIsLoading(false)
@@ -66,12 +61,10 @@ export const useLogin = () => {
 
     const executeGetUserInfo = async (token: string) => {
         setIsLoading(true)
-        setError(null)
 
         try {
             return await authService.userInfo(token) as UserInterface;
         } catch (err: any) {
-            setError(err.message)
             throw err
         } finally {
             setIsLoading(false)
@@ -82,7 +75,6 @@ export const useLogin = () => {
         executeLogin,
         executeGetUserInfo,
         executeRecover,
-        isLoading,
-        error
+        isLoading
     }
 }

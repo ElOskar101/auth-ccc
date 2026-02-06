@@ -14,6 +14,7 @@
     "englishLanguage": "English",
     "selectApplication": "Select application",
     "rightReserved": "All rights reserved.",
+    "devEnv": "Testing environments",
     "insertTotpCode": "Insert TOTP:",
     "totpRule1": "6 digits required"
   },
@@ -64,6 +65,11 @@
     "agreementTopic2": "You will use an email address provided by the company",
     "agreementTopic3": "The system will record the actions you perform on Central Control",
     "agreementTopic4": "You will use two-factor authentication (an app is required to authenticate)"
+  },
+  "forgotPassword": {
+    "redirectToLogin": "Redirecting...",
+    "emailInstructions": "Instructions will be sent to your inbox",
+    "successNotification": "Email sent successfully"
   },
   "defaults": {
     "close": "Close",

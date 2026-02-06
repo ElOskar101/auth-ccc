@@ -44,8 +44,8 @@ export const ForgotPasswordPage = ()=> {
     }, [language]);
 
     useEffect(() => {
-        console.error(currentApp)
-        setCurrentApp(APPS.find(app=>app.type === env) || null);
+        if (APPS[0])
+            setCurrentApp(APPS.find(app=>app.type === env) || APPS[0]);
     }, [env]);
 
     const onHandleChangePassword = (data: ForgotPasswordFormData) => {
@@ -53,7 +53,7 @@ export const ForgotPasswordPage = ()=> {
         executeChangePassword(newData).then(
             ()=> {
                 form.reset();
-                toast.success('Redirecting to login page...', {
+                toast.success(t('forgotPassword.redirectToLogin'), {
                         duration: 3000,
                         onAutoClose: () => navigate('/login', {replace: true})
                     });
@@ -65,7 +65,7 @@ export const ForgotPasswordPage = ()=> {
 
     return (
        <PageWrapper>
-              <Card size="lg">
+              <Card>
                   <CardHeader title="Forgot Password">
                       <div className="flex">
                           <LangAndThemeSelector/>
@@ -109,7 +109,7 @@ export const ForgotPasswordPage = ()=> {
                                     {...form.register('repeatedPassword')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                               {(password && repeatedPassword) && (
-                                  <p className={`text-sm ${password !== repeatedPassword ? "text-gray-400":"text-green-600"}`}>
+                                  <p className={`mt-2 text-sm ${password !== repeatedPassword ? "text-gray-400":"text-green-600"}`}>
                                       {password === repeatedPassword ? '✔' : '•'}{t('register.formRules.passwordRule5')}
                                   </p>
                               )}

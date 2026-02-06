@@ -3,7 +3,6 @@ import {Container} from "@/app/components/container.tsx";
 
 export const RecoverPasswordLayout = () => {
     return (
-
         <Container>
                 <Outlet/>
         </Container>
