@@ -61,7 +61,7 @@ export const LoginPage = ()=> {
         executeLogin(data).then(
             (result)=>{
                 if (currentApp)
-                    navigate(`${currentApp?.url}${redirect}/?key=${btoa(result.token)}`)
+                    navigate(`${currentApp?.url}${redirect}?key=${btoa(result.token)}`)
                 /*
                 For TOTP operations
                 executeGetUserInfo(data.token).then(
