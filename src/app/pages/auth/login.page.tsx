@@ -34,7 +34,7 @@ export const LoginPage = ()=> {
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
     const [searchParams] = useSearchParams();
-    const redirect = searchParams.get('redirect') || '/';
+    const redirect = searchParams.get('redirect') || '';
     const appId = searchParams.get('app') || 'cc';
     const { t } = useTranslation();
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -61,7 +61,7 @@ export const LoginPage = ()=> {
         executeLogin(data).then(
             (result)=>{
                 if (currentApp)
-                    navigate(`${currentApp?.url}#/{${redirect}/?key=${btoa(result.token)}`)
+                    navigate(`${currentApp?.url}${redirect}/?key=${btoa(result.token)}`)
                 /*
                 For TOTP operations
                 executeGetUserInfo(data.token).then(
