@@ -118,7 +118,7 @@ export const LoginPage = ()=> {
                             <fieldset className="space-y-5">
                                 <div className="">
                                     <Label htmlFor="username">{t('login.username')}</Label>
-                                    <Input autoFocus={true} type="text" id="username" autoComplete="username"
+                                    <Input type="text" id="username" autoComplete="username"
                                            disabled={currentApp?.id === 'orioris'}
                                            {...form.register("username")}
                                            placeholder={t('login.usernamePlaceholder')} required/>
@@ -207,7 +207,6 @@ export const LoginPage = ()=> {
                             render={({ field }) => (
                                 <InputTOTP
                                     {...field}
-                                    autoFocus
                                 />
                             )}
                         />
@@ -243,8 +242,7 @@ export const LoginPage = ()=> {
                                     disabled={isLoading}
                                     required
                                     placeholder={t('register.emailPlaceholder')}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    autoFocus/>
+                                    onChange={(e) => setEmail(e.target.value)}/>
                                 <Button disabled={email.length == 0 || !/\S+@\S+\.\S+/.test(email) || isLoading} type="submit" variant="primary">
                                     <Spinner variant="white" hidden={!isLoading} />
                                     {t('defaults.accept')}

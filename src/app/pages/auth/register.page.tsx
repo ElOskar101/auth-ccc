@@ -83,7 +83,6 @@ export const RegisterPage = ()=> {
                                     htmlFor="fullName"
                                 >{t('register.fullName')}</Label>
                                 <Input
-                                    autoFocus={true}
                                     id="fullName"
                                     {...form.register('fullName')}
                                     placeholder={t('register.fullNamePlaceholder')}

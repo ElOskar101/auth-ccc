@@ -13,12 +13,14 @@ export const Footer = () => {
                 <div className="tracking-wider content-center">
                     <span>© {new Date().getFullYear()} DentalRobot. </span>
                     <span>{` ${t('login.rightReserved')}`}</span>
+                    <span>• Auth v2</span>
                 </div>
                 <div className="flex gap-3">
                     <div className="flex self-center tracking-wide">
                         <p className="">
                             {t('login.devEnv')}:
                         </p>
+
                     </div>
 
                     <div className="flex gap-3">
