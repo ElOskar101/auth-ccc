@@ -42,7 +42,7 @@ const APPS: AppInfo[] = [
         type: 'dev',
         url:"https://dev-incidents.controlcentralcarrier.com/#",
         apiUrl:"https://dev-carrier.dentalautomation.ai/"
-    },
+    }
 ];
 
 export const useAppSelector = () => {

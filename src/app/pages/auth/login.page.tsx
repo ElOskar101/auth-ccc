@@ -2,7 +2,6 @@ import { Label, Input, Button, LinkButton } from "../../components/ui/";
 import {useNavigate} from "react-router-dom";
 import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'react-router-dom';
@@ -34,8 +33,8 @@ export const LoginPage = ()=> {
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
     const [searchParams] = useSearchParams();
-    const redirect = searchParams.get('redirect') || '';
-    const appId = searchParams.get('app') || 'cc';
+    const [url, setUrl] = useState<URL|null>(null);
+    const mode:string = searchParams.get('mode') || 'prod';
     const { t } = useTranslation();
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
     const [isLostPasswordOpenModal, setIsLostPasswordOpenModal] = useState<boolean>(false);
@@ -53,15 +52,35 @@ export const LoginPage = ()=> {
     }, [language]);
 
     useEffect(() => {
-        if (APPS[0])
-            setCurrentApp(APPS.find(app=>app.id === appId) || APPS[0]);
-    }, [appId]);
+
+        try {
+            const decodedURL = atob(searchParams.get("url") || "");
+            const validURL = new URL(decodedURL);
+            const app = validURL.href.includes('localhost') ? APPS.find(app => app.type === mode) : APPS.find(app => validURL.href.startsWith(app.url));
+            if (app){
+                setCurrentApp(app);
+                setUrl(validURL)
+            }else setUrl(null);
+
+        } catch {}
+    }, []);
 
     const onHandleLogin = async (data: LoginFormData) => {
         executeLogin(data).then(
             (result)=>{
-                if (currentApp)
-                    navigate(`${currentApp?.url}${redirect}?key=${btoa(result.token)}`)
+                let href = `${currentApp?.url}/?key=${btoa(result.token)}`|| "";
+                if (url){
+
+                    const [path, hashQuery = ''] = url.hash.split('?');
+                    const params = new URLSearchParams(hashQuery);
+                    params.set('key', btoa(result.token));
+                    href = `${url.origin}/${path}?${params}`;
+                }
+                //console.log(href);
+                //u.searchParams.set('key', btoa(result.token));
+                //console.log(u.origin + u.search);
+                navigate(href);
+
                 /*
                 For TOTP operations
                 executeGetUserInfo(data.token).then(
@@ -176,7 +195,10 @@ export const LoginPage = ()=> {
                 <AppSelector
                     apps={APPS}
                     selectedAppId={currentApp && currentApp.id || ''}
-                    onSelect={(appInfo) => setCurrentApp(appInfo)}
+                    onSelect={(appInfo) => {
+                        setUrl(null);
+                        setCurrentApp(appInfo)
+                    }}
                 />
             </section>
             {/* TOTP Modal */}
