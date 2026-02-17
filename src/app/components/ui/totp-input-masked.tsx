@@ -4,6 +4,7 @@ import {cn} from "@/app/libs/utils.ts";
 interface InputTOTPProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
     value: string
+    forBackupCode?: boolean
     onChange: (value: string) => void
 }
 
@@ -11,11 +12,13 @@ export const InputTOTP = ({
                               className,
                               value,
                               onChange,
+                              forBackupCode,
                               ...props
                           }: InputTOTPProps) => {
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const numeric = e.target.value.replace(/\D/g, '').slice(0, 6)
-        onChange(numeric)
+        const value = forBackupCode ? e.target.value.toUpperCase() :  e.target.value.replace(/\D/g, '').slice(0, 6)
+        onChange(value)
     }
 
     return (

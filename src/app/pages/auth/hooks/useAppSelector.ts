@@ -8,8 +8,7 @@ const APPS: AppInfo[] = [
         logo: '/new-ccc-isolated-logo.svg',
         type: 'prod',
         url:"https://controlcentralcarrier.com/#",
-        apiUrl:"https://carriers.dentalautomation.ai/"
-
+        apiUrl:"https://carriers.dentalautomation.ai/api"
     },
     {
         id: 'incidents',
@@ -17,7 +16,7 @@ const APPS: AppInfo[] = [
         logo: '/new-incidents-logo.svg',
         type: 'prod',
         url:"https://incidents.controlcentralcarrier.com/#",
-        apiUrl:"https://carriers.dentalautomation.ai/"
+        apiUrl:"https://carriers.dentalautomation.ai/api"
     },
     {
         id: 'orioris',
@@ -33,7 +32,7 @@ const APPS: AppInfo[] = [
         logo: '/new-ccc-isolated-logo.svg',
         type: 'dev',
         url:"https://dev.controlcentralcarrier.com/#",
-        apiUrl:"https://dev-carrier.dentalautomation.ai/"
+        apiUrl:"https://dev-carrier.dentalautomation.ai/api/v2"
     },
     {
         id: 'dev-incidents',
@@ -41,7 +40,7 @@ const APPS: AppInfo[] = [
         logo: '/new-incidents-logo.svg',
         type: 'dev',
         url:"https://dev-incidents.controlcentralcarrier.com/#",
-        apiUrl:"https://dev-carrier.dentalautomation.ai/"
+        apiUrl:"https://dev-carrier.dentalautomation.ai/api/v2"
     }
 ];
 

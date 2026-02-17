@@ -21,14 +21,15 @@ import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 import {Spinner} from "@/app/components/ui/spinner.tsx";
 import {InputTOTP} from "@/app/components/ui/totp-input-masked.tsx";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
-import {useLogin, UserInterface} from "@/app/pages/auth/hooks/useLogin.ts";
+import {LoginResponse, useLogin, UserInterface} from "@/app/pages/auth/hooks/useLogin.ts";
 import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/card";
 
 export const LoginPage = ()=> {
 
     const navigate = useNavigate();
-    const {isLoading, executeLogin, executeGetUserInfo, executeRecover} = useLogin();
+    const {isLoading, executeLogin, executeGetUserInfo, executeRecover, executeTotp, executeBackupCodeVerification} = useLogin();
     const [email, setEmail] = useState('');
+    const [token, setToken] = useState('');
     const [user, setUser] = useState<UserInterface>({} as UserInterface);
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
@@ -65,34 +66,64 @@ export const LoginPage = ()=> {
         } catch {}
     }, []);
 
+    const handleRedirect = (token:string) => {
+        let href = `${currentApp?.url}/?key=${btoa(token)}`|| "";
+        if (url){
+
+            const [path, hashQuery = ''] = url.hash.split('?');
+            const params = new URLSearchParams(hashQuery);
+            params.set('key', btoa(token));
+            href = `${url.origin}/${path}?${params}`;
+        }
+        navigate(href);
+    }
+
     const onHandleLogin = async (data: LoginFormData) => {
         executeLogin(data).then(
             (result)=>{
-                let href = `${currentApp?.url}/?key=${btoa(result.token)}`|| "";
-                if (url){
+                let data = result.data as LoginResponse;
+                if (!data.token) return;
+                setToken(data.token);
 
-                    const [path, hashQuery = ''] = url.hash.split('?');
-                    const params = new URLSearchParams(hashQuery);
-                    params.set('key', btoa(result.token));
-                    href = `${url.origin}/${path}?${params}`;
+                if (result.status === 200){
+                    handleRedirect(data.token);
                 }
-                //console.log(href);
-                //u.searchParams.set('key', btoa(result.token));
-                //console.log(u.origin + u.search);
-                navigate(href);
+                /*For TOTP operations*/
+                if (result.status === 206){
+                    executeGetUserInfo(data.token).then(
+                        (result)=> {
+                            setIsOpenModal(true);
+                            setUser(result.data as UserInterface);
+                        }
+                    );
+                }
 
-                /*
-                For TOTP operations
-                executeGetUserInfo(data.token).then(
-                    ()=> {
-                        setIsOpenModal(true);
-                        setUser(user as UserInterface);
-                    }
-                );*/
             }
         ).catch( (e) => {
             toast.warning(e.message);
         });
+    }
+
+    const onHandleTwoStep = (data: TotpForm) => {
+        if (data.backupCodeInstead){
+            executeBackupCodeVerification(data.code, user.email).then((r)=>{
+                const result = r.data as LoginResponse;
+                setIsOpenModal(false);
+                handleRedirect(result.token);
+            }).catch((e)=>{
+                toast.warning(e.message);
+            });
+        }else{
+            executeTotp(data.code, token).then(r => {
+                const result = r.data as LoginResponse;
+                setIsOpenModal(false);
+                if (result.deviceId)
+                    localStorage.setItem('deviceId', result.deviceId);
+                handleRedirect(result.token);
+            }).catch( (e) => {
+                toast.warning(e.message);
+            });
+        }
     }
 
     const handleRecover = async (e: React.FormEvent) => {
@@ -106,7 +137,6 @@ export const LoginPage = ()=> {
                 }
             });
         })
-
     }
 
     return (
@@ -204,41 +234,60 @@ export const LoginPage = ()=> {
             {/* TOTP Modal */}
             <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(!isOpenModal)} size="md">
                 <ModalHeader>
+                    {user.username ? (
                     <div className="flex gap-3 items-center">
                         <img className="rounded-full w-10 h-10 ring-1 ring-blue-400 p-1" alt="user" src={user.urlImage || '/new-ccc-isolated-logo.svg'}/>
-                        <div className="flex-col">
-                            <h2 className="font-semibold capitalize self-center">
-                                {user.fullName}
-                            </h2>
-                            <p className="text-sm dark:text-gray-200 capitalize self-center text-zinc-700">
-                                {'@'+user.username}
-                            </p>
-                        </div>
+
+                            <div className="flex-col">
+                                <h2 className="font-semibold capitalize self-center">
+                                    {user.fullName}
+                                </h2>
+                                <p className="text-sm dark:text-gray-200 capitalize self-center text-zinc-700">
+                                    {'@'+user.username}
+                                </p>
+                            </div>
+
                     </div>
+                    ): (
+                        <p className="font-semibold">Confirm your identification</p>
+                    )}
                     <RoundedTinyButton className="cursor-pointer" onClick={()=> setIsOpenModal(false)}>
                         <IoCloseOutline/>
                     </RoundedTinyButton>
                 </ModalHeader>
 
-                <ModalBody>
-                    <Label>{t('login.insertTotpCode')}</Label>
-                    <div className="flex items-center gap-2 mt-1">
-                        <Controller
-                            name="code"
-                            control={totpForm.control}
-                            render={({ field }) => (
-                                <InputTOTP
-                                    {...field}
-                                />
-                            )}
-                        />
-                        <Button disabled={!totpForm.formState.isValid} variant="primary" onClick={()=> setIsOpenModal(false)}>
-                            <Spinner variant="white" hidden={true} />
-                            {t('defaults.accept')}
-                        </Button>
-                    </div>
+                <form onSubmit={totpForm.handleSubmit(onHandleTwoStep)}>
+                    <ModalBody className="space-y-2">
+                        <div className="flex justify-between">
+                            <Label>{totpForm.watch('backupCodeInstead') ? 'Insert backup code:' : t('login.insertTotpCode')}</Label>
+                        </div>
 
-                </ModalBody>
+                        <div className="flex items-center gap-2 mt-1">
+                            <Controller
+                                name="code"
+                                control={totpForm.control}
+                                render={({ field }) => (
+                                    <InputTOTP forBackupCode={totpForm.watch('backupCodeInstead')}  {...field} />
+                                )}
+                            />
+
+                            <Button
+                                type="submit"
+                                disabled={!totpForm.formState.isValid}
+                                variant="primary"
+                            >
+                                <Spinner variant="white" hidden={!isLoading} />
+                                {t('defaults.accept')}
+                            </Button>
+                        </div>
+                        <div className="flex gap-1">
+                            <input type="checkbox"
+                                   {...totpForm.register('backupCodeInstead')}
+                                   />
+                            <p className="text-gray-500 dark:text-gray-50">Use backup code instead</p>
+                        </div>
+                    </ModalBody>
+                </form>
 
             </Modal>
             {/* Lost password modal */}

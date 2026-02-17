@@ -3,9 +3,16 @@ import {LoginFormData} from "@/app/pages/auth/schema/login.schema.ts";
 import {createLogin, createRecoverPassword, createUserInfoRequest} from "@/app/pages/auth/services/login.service.ts";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
+import {
+    createBackupCodeVerification,
+    createLoginV2,
+    createRecoverPasswordV2,
+    createTOTP
+} from "@/app/pages/auth/services/v2/login.service.ts";
 
-interface LoginResponse {
+export interface LoginResponse {
     token: string;
+    deviceId?: string;
 }
 
 export interface UserInterface {
@@ -16,30 +23,37 @@ export interface UserInterface {
     urlImage: string;
 }
 
+
 export const useLogin = () => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const { currentApp } = useAppSelectorContext()
+    const { currentApp } = useAppSelectorContext();
+    const version: 'v1' | 'v2' = currentApp?.apiUrl?.includes('v2') ? 'v2' : 'v1';
 
     const http = useMemo(() =>
         createHttpClient(currentApp?.apiUrl || ''), [currentApp?.apiUrl])
 
     const authService = useMemo(() => {
-        const loginService = createLogin(http)
+        const loginService = version === "v1" ? createLogin(http) : createLoginV2(http)
         const userService = createUserInfoRequest(http)
-        const recoverService = createRecoverPassword(http)
+        const totpCodeService = createTOTP(http)
+        const backupCode = createBackupCodeVerification(http)
+        const recoverService = version === "v1" ? createRecoverPassword(http) : createRecoverPasswordV2(http)
         return {
             ...loginService,
             ...userService,
-            ...recoverService
+            ...recoverService,
+            ...totpCodeService,
+            ...backupCode
         }}, [http])
 
 
 
     const executeLogin = async (data: LoginFormData) => {
-        setIsLoading(true)
+        setIsLoading(true);
+        const deviceId = localStorage.getItem("deviceId") || '';
 
         try {
-            return await authService.login(data) as LoginResponse;
+            return await authService.login(data, deviceId);
         } catch (err: any) {
             throw err
         } finally {
@@ -51,7 +65,7 @@ export const useLogin = () => {
         setIsLoading(true)
 
         try {
-            return await authService.recover(email) as { message: string };
+            return await authService.recover(email);
         } catch (err: any) {
             throw err
         } finally {
@@ -63,7 +77,29 @@ export const useLogin = () => {
         setIsLoading(true)
 
         try {
-            return await authService.userInfo(token) as UserInterface;
+            return await authService.userInfo(token);
+        } catch (err: any) {
+            throw err
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const executeTotp = async (code: string, token:string) => {
+        setIsLoading(true)
+        try {
+            return await authService.verifyTotp(code, token);
+        } catch (err: any) {
+            throw err
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const executeBackupCodeVerification = async (code: string, email:string) => {
+        setIsLoading(true)
+        try {
+            return await authService.verifyBackupCode(code, email);
         } catch (err: any) {
             throw err
         } finally {
@@ -75,6 +111,8 @@ export const useLogin = () => {
         executeLogin,
         executeGetUserInfo,
         executeRecover,
+        executeTotp,
+        executeBackupCodeVerification,
         isLoading
     }
 }

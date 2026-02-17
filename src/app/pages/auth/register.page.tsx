@@ -13,7 +13,7 @@ import {InputPassword} from "@/app/components/ui/input-password.tsx";
 import {RequiredFieldsMessage} from "@/app/pages/auth/components/required-fields-message.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {RegisterFormData, registerSchema, passwordRules} from "@/app/pages/auth/schema/register.schema.ts";
+import {RegisterFormData, registerSchema} from "@/app/pages/auth/schema/register.schema.ts";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {AppSelector} from "@/app/pages/auth/components/app-selector.tsx";
