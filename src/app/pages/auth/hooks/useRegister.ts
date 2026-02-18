@@ -5,7 +5,7 @@ import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext
 import {createHttpClient} from "@/app/libs/https.ts";
 
 export interface ChangePasswordInterface extends ForgotPasswordFormData {
-    email: string;
+    email?: string;
     recoveringCode?:string,
 }
 
