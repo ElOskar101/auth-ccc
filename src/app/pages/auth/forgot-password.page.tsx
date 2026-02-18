@@ -22,6 +22,7 @@ import i18n from "i18next";
 
 export const ForgotPasswordPage = ()=> {
     const { executeChangePassword, isLoading, error } = useRegister();
+
     const {currentApp, setCurrentApp, APPS} = useAppSelector();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();

@@ -7,9 +7,12 @@ export const createRegister = (http: HttpClient) => {
 
     return {
         register: (data: RegisterFormData) =>
-            http('/signup', {
+            http('/v2/auth/signup', {
                 method: 'POST',
                 body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }),
     }
 }
@@ -17,10 +20,13 @@ export const createRegister = (http: HttpClient) => {
 export const createChangePassword = (http: HttpClient) => {
 
     return {
-        changePassword: (data: ChangePasswordInterface) =>
-            http('/reset', {
+        validateCode: (data: ChangePasswordInterface) =>
+            http('/v2/auth/change-password/', {
                 method: 'PUT',
                 body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }),
     }
 }

@@ -30,7 +30,7 @@ export const InputTOTP = ({
             value={value}
             onChange={handleChange}
             maxLength={6}
-            placeholder="123456"
+            placeholder={forBackupCode ? "WF6MC9" : "123456"}
             className={cn(
                 'w-full text-center tracking-widest text-lg font-mono',
                 'border rounded-lg px-4 py-2',

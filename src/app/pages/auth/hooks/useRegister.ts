@@ -6,6 +6,7 @@ import {createHttpClient} from "@/app/libs/https.ts";
 
 interface ChangePasswordInterface extends ForgotPasswordFormData {
     email: string;
+    recoveringCode?:string,
 }
 
 export const useRegister = () => {
@@ -18,8 +19,8 @@ export const useRegister = () => {
 
     const registerService = useMemo(() => {
             const createRegisterService = createRegister(http)
-            const createChangePasswordService = createChangePassword(http)
-            return {...createRegisterService, ...createChangePasswordService}
+            const changePassword = createChangePassword(http)
+            return {...createRegisterService, ...changePassword}
         }
         , [http])
 
@@ -42,7 +43,7 @@ export const useRegister = () => {
         setError(null)
 
         try {
-            return await registerService.changePassword(data);
+            return await registerService.validateCode(data);
         } catch (err: any) {
             setError(err.message)
             throw err

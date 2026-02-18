@@ -16,6 +16,8 @@
     "rightReserved": "Todos los derechos reservados.",
     "devEnv": "Entornos de pruebas",
     "insertTotpCode": "Insertar TOTP:",
+    "insertBackupCode": "Código de respaldo:",
+    "backupCodeInstead": "Usa código de respaldo",
     "totpRule1": "6 dígitos requeridos"
   },
   "register":{

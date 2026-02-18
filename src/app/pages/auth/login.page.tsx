@@ -8,21 +8,21 @@ import { useSearchParams } from 'react-router-dom';
 import i18n from 'i18next';
 import { toast } from 'sonner'
 import {LoginFormData, loginSchema} from "@/app/pages/auth/schema/login.schema.ts";
-import {TotpForm, totpSchema} from "@/app/pages/auth/schema/totp.schema.ts";
+import { TotpForm } from "@/app/pages/auth/schema/totp.schema.ts";
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
 import {LogoImage} from "@/app/components/ui/logo-image.tsx";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
 import {useLanguageContext} from "@/app/context/LanguageContext.tsx";
 import {InputPassword} from "@/app/components/ui/input-password.tsx";
-import {Controller, useForm} from "react-hook-form";
+import { useForm} from "react-hook-form";
 import {Modal, ModalBody, ModalHeader} from "@/app/components/modal";
 import {IoCloseOutline} from "react-icons/io5";
 import {RoundedTinyButton} from "@/app/components/ui/rounded-tiny-button.tsx";
 import {Spinner} from "@/app/components/ui/spinner.tsx";
-import {InputTOTP} from "@/app/components/ui/totp-input-masked.tsx";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {LoginResponse, useLogin, UserInterface} from "@/app/pages/auth/hooks/useLogin.ts";
 import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/card";
+import {TwoFactorModal} from "@/app/pages/auth/components/two-factor-modal.tsx";
 
 export const LoginPage = ()=> {
 
@@ -41,10 +41,6 @@ export const LoginPage = ()=> {
     const [isLostPasswordOpenModal, setIsLostPasswordOpenModal] = useState<boolean>(false);
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
-        mode: 'onChange',
-    });
-    const totpForm = useForm<TotpForm>({
-        resolver: zodResolver(totpSchema),
         mode: 'onChange',
     });
 
@@ -231,65 +227,14 @@ export const LoginPage = ()=> {
                     }}
                 />
             </section>
-            {/* TOTP Modal */}
-            <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(!isOpenModal)} size="md">
-                <ModalHeader>
-                    {user.username ? (
-                    <div className="flex gap-3 items-center">
-                        <img className="rounded-full w-10 h-10 ring-1 ring-blue-400 p-1" alt="user" src={user.urlImage || '/new-ccc-isolated-logo.svg'}/>
-
-                            <div className="flex-col">
-                                <h2 className="font-semibold capitalize self-center">
-                                    {user.fullName}
-                                </h2>
-                                <p className="text-sm dark:text-gray-200 capitalize self-center text-zinc-700">
-                                    {'@'+user.username}
-                                </p>
-                            </div>
-
-                    </div>
-                    ): (
-                        <p className="font-semibold">Confirm your identification</p>
-                    )}
-                    <RoundedTinyButton className="cursor-pointer" onClick={()=> setIsOpenModal(false)}>
-                        <IoCloseOutline/>
-                    </RoundedTinyButton>
-                </ModalHeader>
-
-                <form onSubmit={totpForm.handleSubmit(onHandleTwoStep)}>
-                    <ModalBody className="space-y-2">
-                        <div className="flex justify-between">
-                            <Label>{totpForm.watch('backupCodeInstead') ? 'Insert backup code:' : t('login.insertTotpCode')}</Label>
-                        </div>
-
-                        <div className="flex items-center gap-2 mt-1">
-                            <Controller
-                                name="code"
-                                control={totpForm.control}
-                                render={({ field }) => (
-                                    <InputTOTP forBackupCode={totpForm.watch('backupCodeInstead')}  {...field} />
-                                )}
-                            />
-
-                            <Button
-                                type="submit"
-                                disabled={!totpForm.formState.isValid}
-                                variant="primary"
-                            >
-                                <Spinner variant="white" hidden={!isLoading} />
-                                {t('defaults.accept')}
-                            </Button>
-                        </div>
-                        <div className="flex gap-1">
-                            <input type="checkbox"
-                                   {...totpForm.register('backupCodeInstead')}
-                                   />
-                            <p className="text-gray-500 dark:text-gray-50">Use backup code instead</p>
-                        </div>
-                    </ModalBody>
-                </form>
-
-            </Modal>
+            {/*TOTP Modal (recyclable because it was thought to be use in recover password)*/}
+            <TwoFactorModal
+                isOpen={isOpenModal}
+                onClose={() => setIsOpenModal(!isOpenModal)}
+                onSubmit={onHandleTwoStep}
+                user={user}
+                isLoading={isLoading}
+            />
             {/* Lost password modal */}
             <Modal isOpen={isLostPasswordOpenModal} onClose={() => setIsLostPasswordOpenModal(!isLostPasswordOpenModal)} size="md">
                 <ModalHeader>
@@ -303,7 +248,7 @@ export const LoginPage = ()=> {
                 </ModalHeader>
 
                 <ModalBody>
-                    <form onSubmit={handleRecover}>
+                    <form  onSubmit={handleRecover}>
                         <fieldset>
                             <Label htmlFor="email">{t('register.email')}</Label>
                             <div className="flex gap-2">
