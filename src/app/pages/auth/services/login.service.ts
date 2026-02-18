@@ -6,13 +6,15 @@ interface LoginPayload {
 }
 
 export const createLogin = (http: HttpClient) => {
+
     return {
-        login: (data: LoginPayload) =>
-            http("/signin", {
+        login: (data: LoginPayload, deviceId:string) =>
+            http('/auth/login', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'x-device-id': deviceId
                 }
             })
     }
@@ -22,13 +24,40 @@ export const createRecoverPassword = (http: HttpClient) => {
 
     return {
         recover: (email: string) =>
-            http("/recover", {
+            http('/auth/forgot-password', {
                 method: 'POST',
                 body: JSON.stringify({email}),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }),
+    }
+}
+
+export const createTOTP = (http: HttpClient) => {
+    return {
+        verifyTotp: (code: string, token: string) =>
+            http("/users/verify-2fa", {
+                method: 'POST',
+                body: JSON.stringify({code}),
+                headers: {
+                    'x-access-token': token,
+                    'Content-Type': 'application/json'
+                }
+            })
+    }
+}
+
+export const createBackupCodeVerification = (http: HttpClient) => {
+    return {
+        verifyBackupCode: (code: string, email: string) =>
+            http("/auth/backup-code/check", {
+                method: 'POST',
+                body: JSON.stringify({backupCode:code, email}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
     }
 }
 

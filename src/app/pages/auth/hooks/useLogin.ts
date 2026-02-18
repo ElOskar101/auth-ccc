@@ -1,14 +1,13 @@
 import React, {useMemo} from "react";
 import {LoginFormData} from "@/app/pages/auth/schema/login.schema.ts";
-import {createLogin, createRecoverPassword, createUserInfoRequest} from "@/app/pages/auth/services/login.service.ts";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
 import {
     createBackupCodeVerification,
-    createLoginV2,
-    createRecoverPasswordV2,
-    createTOTP
-} from "@/app/pages/auth/services/v2/login.service.ts";
+    createLogin,
+    createRecoverPassword,
+    createTOTP, createUserInfoRequest
+} from "@/app/pages/auth/services/login.service.ts";
 
 export interface LoginResponse {
     token: string;
@@ -27,17 +26,16 @@ export interface UserInterface {
 export const useLogin = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const { currentApp } = useAppSelectorContext();
-    const version: 'v1' | 'v2' = currentApp?.apiUrl?.includes('v2') ? 'v2' : 'v1';
 
     const http = useMemo(() =>
         createHttpClient(currentApp?.apiUrl || ''), [currentApp?.apiUrl])
 
     const authService = useMemo(() => {
-        const loginService = version === "v1" ? createLogin(http) : createLoginV2(http)
+        const loginService = createLogin(http)
         const userService = createUserInfoRequest(http)
         const totpCodeService = createTOTP(http)
         const backupCode = createBackupCodeVerification(http)
-        const recoverService = version === "v1" ? createRecoverPassword(http) : createRecoverPasswordV2(http)
+        const recoverService =  createRecoverPassword(http)
         return {
             ...loginService,
             ...userService,
