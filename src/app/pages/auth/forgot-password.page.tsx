@@ -1,12 +1,11 @@
 import {ForgotPasswordFormData, forgotPasswordSchema} from "@/app/pages/auth/schema/register.schema.ts";
 import {LangAndThemeSelector} from "@/app/pages/auth/components/lang-and-theme-selector.tsx";
 import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/card";
-import {useAppSelector} from "@/app/pages/auth/hooks/useAppSelector.ts";
 import {Button, Input, Label, LinkButton} from "@/app/components/ui";
 import {InputPassword} from "@/app/components/ui/input-password.tsx";
 import {useLanguageContext} from "@/app/context/LanguageContext.tsx";
 import {PasswordRule} from "@/app/components/ui/password-rules.tsx";
-import {useRegister} from "@/app/pages/auth/hooks/useRegister.ts";
+import {ChangePasswordInterface, useRegister} from "@/app/pages/auth/hooks/useRegister.ts";
 import {PageWrapper} from "@/app/components/page-wrapper.tsx";
 import {LogoImage} from "@/app/components/ui/logo-image.tsx";
 import {Spinner} from "@/app/components/ui/spinner.tsx";
@@ -18,12 +17,13 @@ import {useForm} from "react-hook-form";
 import {useEffect} from "react";
 import {toast} from "sonner";
 import i18n from "i18next";
+import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 
 
 export const ForgotPasswordPage = ()=> {
     const { executeChangePassword, isLoading, error } = useRegister();
 
-    const {currentApp, setCurrentApp, APPS} = useAppSelector();
+    const {currentApp, setCurrentApp, APPS} = useAppSelectorContext();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const {language} = useLanguageContext();
@@ -36,6 +36,7 @@ export const ForgotPasswordPage = ()=> {
     const repeatedPassword = form.watch('repeatedPassword') || '';
     const email = atob (searchParams.get('user') || '');
     const env = searchParams.get('env') || '';
+    const code = searchParams.get('code') || '';
     const password = form.watch('password')|| '';
     const { t } = useTranslation();
 
@@ -46,11 +47,12 @@ export const ForgotPasswordPage = ()=> {
 
     useEffect(() => {
         if (APPS[0])
-            setCurrentApp(APPS.find(app=>app.type === env) || APPS[0]);
+            setCurrentApp(APPS.find(app => app.type === env) || APPS[0]);
     }, [env]);
 
-    const onHandleChangePassword = (data: ForgotPasswordFormData) => {
-        const newData = {...data, email: email};
+    const onHandleChangePassword = (data: ChangePasswordInterface) => {
+        const newData = {...data, email: email, recoveringCode:code};
+        console.log(newData, " and ", data);
         executeChangePassword(newData).then(
             ()=> {
                 form.reset();

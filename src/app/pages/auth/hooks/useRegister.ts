@@ -4,7 +4,7 @@ import {createChangePassword, createRegister} from "@/app/pages/auth/services/re
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
 
-interface ChangePasswordInterface extends ForgotPasswordFormData {
+export interface ChangePasswordInterface extends ForgotPasswordFormData {
     email: string;
     recoveringCode?:string,
 }
@@ -27,8 +27,6 @@ export const useRegister = () => {
 
     const executeRegister = async (data: RegisterFormData) => {
         setIsLoading(true)
-        setError(null)
-
         try {
             return await registerService.register(data);
         } catch (err: any) {
@@ -40,7 +38,7 @@ export const useRegister = () => {
     }
     const executeChangePassword = async (data: ChangePasswordInterface) => {
         setIsLoading(true)
-        setError(null)
+        console.log(currentApp)
 
         try {
             return await registerService.validateCode(data);
