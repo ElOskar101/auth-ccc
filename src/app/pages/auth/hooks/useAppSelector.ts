@@ -32,7 +32,7 @@ const APPS: AppInfo[] = [
         logo: '/new-ccc-isolated-logo.svg',
         type: 'dev',
         url:"https://dev.controlcentralcarrier.com/#",
-        apiUrl:"https://carriers.dentalautomation.ai/api/v2"
+        apiUrl:"https://dev-carrier.dentalautomation.ai/api/v2"
     },
     {
         id: 'dev-incidents',
