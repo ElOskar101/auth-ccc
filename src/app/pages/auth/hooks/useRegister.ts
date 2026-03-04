@@ -3,15 +3,15 @@ import {RegisterFormData, ForgotPasswordFormData} from "@/app/pages/auth/schema/
 import {createChangePassword, createRegister} from "@/app/pages/auth/services/register.service.ts";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {createHttpClient} from "@/app/libs/https.ts";
+import {ApiError} from "@/app/types/error.type.ts";
 
 export interface ChangePasswordInterface extends ForgotPasswordFormData {
-    email?: string;
+    email?: string | undefined;
     recoveringCode?:string,
 }
 
 export const useRegister = () => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<string | null>(null);
     const { currentApp } = useAppSelectorContext()
 
     const http = useMemo(() =>
@@ -30,21 +30,17 @@ export const useRegister = () => {
         try {
             return await registerService.register(data);
         } catch (err: any) {
-            setError(err.message)
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }
     }
     const executeChangePassword = async (data: ChangePasswordInterface) => {
         setIsLoading(true)
-        console.log(currentApp)
-
         try {
             return await registerService.validateCode(data);
         } catch (err: any) {
-            setError(err.message)
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }
@@ -54,7 +50,6 @@ export const useRegister = () => {
     return {
         executeRegister,
         executeChangePassword,
-        isLoading,
-        error
+        isLoading
     }
 }

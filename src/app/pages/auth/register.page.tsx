@@ -22,11 +22,13 @@ import {Spinner} from "@/app/components/ui/spinner.tsx";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 import {PasswordRule} from "@/app/components/ui/password-rules.tsx";
+import {useApiHandler} from "@/app/hooks/userApiErrorHandler.ts";
 
 export const RegisterPage = ()=> {
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
-    const {executeRegister, isLoading, error} = useRegister();
+    const {executeRegister, isLoading } = useRegister();
+    const { handleError } = useApiHandler();
     const navigate = useNavigate();
     const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -47,11 +49,14 @@ export const RegisterPage = ()=> {
 
     const onHandleRegister = async (data: RegisterFormData) => {
         const toastId = toast.loading('Creating Account...');
-        const result = await executeRegister(data);
-        if (result){
+        executeRegister(data).then(()=>{
             toast.success('Account created successfully', {id: toastId, action: {label:t('register.goToLogin'), onClick: () => navigate('/login', {replace: true})}});
             form.reset();
-        }
+        }).catch((e: any) => {
+            toast.dismiss(toastId);
+            handleError(e);
+        });
+
     }
 
     return (
@@ -73,7 +78,7 @@ export const RegisterPage = ()=> {
                         </>
                     )
                     }
-                    <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): error ? error : ""}</p>
+                    <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): ""}</p>
                 </CardHeader>
                 <CardBody onClick={()=>{console.log(form.formState.errors, form.formState.isValid)}}>
                     <form noValidate onSubmit={form.handleSubmit(onHandleRegister)} >

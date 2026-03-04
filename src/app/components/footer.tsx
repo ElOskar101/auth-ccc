@@ -7,13 +7,13 @@ export const Footer = () => {
     const {currentApp, setCurrentApp, APPS} = useAppSelectorContext();
 
     return (
-        <footer className="w-full bg-gray-50 border-t border-gray-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400 text-gray-500 p-3 mt-3 shadow-xl text-sm rounded-xl">
+        <footer className="w-full my-1 bg-gray-50 border-t border-gray-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400 text-gray-500 p-3 shadow-xl text-sm rounded-xl">
             <div className="flex justify-between">
 
                 <div className="tracking-wider content-center">
                     <span>© {new Date().getFullYear()} DentalRobot. </span>
                     <span>{` ${t('login.rightReserved')}`}</span>
-                    <span>• Auth v2</span>
+                    <span>• Auth v2 .1</span>
                 </div>
                 <div className="flex gap-3">
                     <div className="flex self-center tracking-wide">

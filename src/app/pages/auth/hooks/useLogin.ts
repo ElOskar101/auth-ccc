@@ -8,6 +8,7 @@ import {
     createRecoverPassword,
     createTOTP, createUserInfoRequest
 } from "@/app/pages/auth/services/login.service.ts";
+import {ApiError} from "@/app/types/error.type.ts";
 
 export interface LoginResponse {
     token: string;
@@ -26,7 +27,6 @@ export interface UserInterface {
 export const useLogin = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const { currentApp } = useAppSelectorContext();
-
     const http = useMemo(() =>
         createHttpClient(currentApp?.apiUrl || ''), [currentApp?.apiUrl])
 
@@ -53,7 +53,7 @@ export const useLogin = () => {
         try {
             return await authService.login(data, deviceId);
         } catch (err: any) {
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }
@@ -65,7 +65,7 @@ export const useLogin = () => {
         try {
             return await authService.recover(email);
         } catch (err: any) {
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }
@@ -77,7 +77,7 @@ export const useLogin = () => {
         try {
             return await authService.userInfo(token);
         } catch (err: any) {
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }
@@ -88,7 +88,7 @@ export const useLogin = () => {
         try {
             return await authService.verifyTotp(code, token);
         } catch (err: any) {
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }
@@ -99,7 +99,7 @@ export const useLogin = () => {
         try {
             return await authService.verifyBackupCode(code, email);
         } catch (err: any) {
-            throw err
+            throw err as ApiError
         } finally {
             setIsLoading(false)
         }

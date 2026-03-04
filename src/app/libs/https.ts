@@ -1,3 +1,5 @@
+import {ApiError} from "@/app/types/error.type.ts";
+
 export interface HttpResponse<T> {
     status: number
     ok: boolean
@@ -36,11 +38,11 @@ export function createHttpClient(
         }
 
         if (!response.ok) {
-            throw {
-                status: response.status,
-                message: data?.message || data || '',
+            throw new ApiError(
+                data?.message,
+                response.status,
                 data
-            }
+            )
         }
 
         return {

@@ -18,10 +18,12 @@ import {useEffect} from "react";
 import {toast} from "sonner";
 import i18n from "i18next";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
+import {useApiHandler} from "@/app/hooks/userApiErrorHandler.ts";
 
 
 export const ForgotPasswordPage = ()=> {
-    const { executeChangePassword, isLoading, error } = useRegister();
+    const { executeChangePassword, isLoading } = useRegister();
+    const { handleError } = useApiHandler();
 
     const {currentApp, setCurrentApp, APPS} = useAppSelectorContext();
     const navigate = useNavigate();
@@ -52,7 +54,6 @@ export const ForgotPasswordPage = ()=> {
 
     const onHandleChangePassword = (data: ChangePasswordInterface) => {
         const newData = {...data, email: email, recoveringCode:code};
-        console.log(newData, " and ", data);
         executeChangePassword(newData).then(
             ()=> {
                 form.reset();
@@ -61,8 +62,8 @@ export const ForgotPasswordPage = ()=> {
                         onAutoClose: () => navigate('/login', {replace: true})
                     });
             }
-        ).catch(()=>{
-            toast.error(error);
+        ).catch((e: any)=>{
+            handleError(e)
         });
     }
 
