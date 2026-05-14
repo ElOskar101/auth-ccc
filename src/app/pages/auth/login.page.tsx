@@ -68,13 +68,13 @@ export const LoginPage = ()=> {
             if (app){
                 setCurrentApp(app);
                 setUrl(validURL)
-            }else setUrl(null);
-
+            }else setUrl(validURL);
         } catch {}
     }, []);
 
     const handleRedirect = (token:string) => {
-        let href = `${currentApp?.url}/?key=${btoa(token)}`|| "";
+        let href = `${url?.href ? url.href : currentApp?.url}/?key=${btoa(token)}`|| "";
+        console.log(href);
         if (url){
 
             const [path, hashQuery = ''] = url.hash.split('?');
