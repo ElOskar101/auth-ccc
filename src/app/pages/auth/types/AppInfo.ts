@@ -4,5 +4,6 @@ export interface AppInfo {
     logo: string;
     type: 'dev' | 'prod',
     url: string;
+    disabled: boolean;
     apiUrl?: string;
 }

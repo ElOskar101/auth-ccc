@@ -7,6 +7,7 @@ const APPS: AppInfo[] = [
         name: 'Control Central',
         logo: '/new-ccc-isolated-logo.svg',
         type: 'prod',
+        disabled: false,
         url:"https://controlcentralcarrier.com/#",
         apiUrl:"https://carriers.dentalautomation.ai/api/v2"
     },
@@ -15,7 +16,17 @@ const APPS: AppInfo[] = [
         name: 'Incidents',
         logo: '/new-incidents-logo.svg',
         type: 'prod',
+        disabled: false,
         url:"https://incidents.controlcentralcarrier.com/#",
+        apiUrl:"https://carriers.dentalautomation.ai/api/v2"
+    },
+    {
+        id: 'agent',
+        name: 'Agent dashboard',
+        logo: '/agent-logo.svg',
+        type: 'dev',
+        disabled: true,
+        url:"https://agent.controlcentralcarrier.com",
         apiUrl:"https://carriers.dentalautomation.ai/api/v2"
     },
     {
@@ -23,6 +34,7 @@ const APPS: AppInfo[] = [
         name: 'Oriois Playground',
         logo: '/orioris-logo.svg',
         type: 'prod',
+        disabled: false,
         url:"https://orioris.controlcentralcarrier.com/",
         apiUrl:""
     },
@@ -31,6 +43,7 @@ const APPS: AppInfo[] = [
         name: 'Dev Control Central',
         logo: '/new-ccc-isolated-logo.svg',
         type: 'dev',
+        disabled: false,
         url:"https://dev.controlcentralcarrier.com/#",
         apiUrl:"https://dev-carrier.dentalautomation.ai/api/v2"
     },
@@ -39,9 +52,11 @@ const APPS: AppInfo[] = [
         name: 'Dev Incidents',
         logo: '/new-incidents-logo.svg',
         type: 'dev',
+        disabled: false,
         url:"https://dev-incidents.controlcentralcarrier.com/#",
         apiUrl:"https://dev-carrier.dentalautomation.ai/api/v2"
     }
+
 ];
 
 export const useAppSelector = () => {

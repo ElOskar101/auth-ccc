@@ -16,6 +16,7 @@ export const AppSelectorItem = ({
 
         <button
             onClick={onClick}
+            disabled={app.disabled}
             aria-label={`Select ${app.name}`}
             className="flex-1 flex flex-col text-center items-center cursor-pointer p-3"
         >
