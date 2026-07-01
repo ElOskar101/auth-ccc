@@ -12,7 +12,7 @@ export const Footer = () => {
 
                 <div className="tracking-wider content-center">
                     <span>© {new Date().getFullYear()} </span>
-                    <span>• Auth v2 .3 </span>
+                    <span>• Auth v2 .4 </span>
                 </div>
                 <div className="flex gap-3">
                     <div className="flex self-center tracking-wide">
