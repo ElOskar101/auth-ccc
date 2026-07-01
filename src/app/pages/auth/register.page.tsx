@@ -23,8 +23,11 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 import {PasswordRule} from "@/app/components/ui/password-rules.tsx";
 import {useApiHandler} from "@/app/hooks/userApiErrorHandler.ts";
+import {useNoIndex} from "@/app/hooks/useNoIndex.ts";
 
 export const RegisterPage = ()=> {
+    useNoIndex();
+
     const {language} = useLanguageContext();
     const {currentApp, APPS, setCurrentApp} = useAppSelectorContext();
     const {executeRegister, isLoading } = useRegister();
@@ -240,5 +243,4 @@ export const RegisterPage = ()=> {
         </PageWrapper>
     );
 }
-
 

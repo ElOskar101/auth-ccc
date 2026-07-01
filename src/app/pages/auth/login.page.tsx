@@ -24,8 +24,10 @@ import {LoginResponse, useLogin, UserInterface} from "@/app/pages/auth/hooks/use
 import {Card, CardBody, CardFooter, CardHeader} from "@/app/components/card";
 import {InputTOTP} from "@/app/components/ui/totp-input-masked.tsx";
 import {useApiHandler} from "@/app/hooks/userApiErrorHandler.ts";
+import {useNoIndex} from "@/app/hooks/useNoIndex.ts";
 
 export const LoginPage = ()=> {
+    useNoIndex();
 
     const navigate = useNavigate();
     const {isLoading, executeLogin, executeGetUserInfo, executeRecover, executeTotp, executeBackupCodeVerification} = useLogin();
@@ -76,7 +78,6 @@ export const LoginPage = ()=> {
         let href = `${url?.href ? url.href : currentApp?.url}/?key=${btoa(token)}`|| "";
         console.log(href);
         if (url){
-
             const [path, hashQuery = ''] = url.hash.split('?');
             const params = new URLSearchParams(hashQuery);
             params.set('key', btoa(token));
@@ -97,6 +98,7 @@ export const LoginPage = ()=> {
                 }
                 /*For TOTP operations*/
                 if (result.status === 206){
+                    console.log(url);
                     executeGetUserInfo(data.token).then(
                         (result)=> {
                             setIsOpenModal(true);

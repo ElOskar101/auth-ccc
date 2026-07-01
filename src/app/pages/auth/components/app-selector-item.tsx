@@ -11,7 +11,6 @@ export const AppSelectorItem = ({
                                     isActive,
                                     onClick,
                                 }: AppSelectorItemProps) => {
-
     return (
 
         <button

@@ -11,8 +11,7 @@ export const Footer = () => {
             <div className="flex justify-between">
 
                 <div className="tracking-wider content-center">
-                    <span>© {new Date().getFullYear()} DentalRobot. </span>
-                    <span>{` ${t('login.rightReserved')}`}</span>
+                    <span>© {new Date().getFullYear()} </span>
                     <span>• Auth v2 .3 </span>
                 </div>
                 <div className="flex gap-3">

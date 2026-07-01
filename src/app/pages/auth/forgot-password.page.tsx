@@ -19,9 +19,12 @@ import {toast} from "sonner";
 import i18n from "i18next";
 import {useAppSelectorContext} from "@/app/pages/auth/context/AppSelectorContext.tsx";
 import {useApiHandler} from "@/app/hooks/userApiErrorHandler.ts";
+import {useNoIndex} from "@/app/hooks/useNoIndex.ts";
 
 
 export const ForgotPasswordPage = ()=> {
+    useNoIndex();
+
     const { executeChangePassword, isLoading } = useRegister();
     const { handleError } = useApiHandler();
 
