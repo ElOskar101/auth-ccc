@@ -9,7 +9,6 @@ export const Footer = () => {
     return (
         <footer className="w-full my-1 bg-gray-50 border-t border-gray-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400 text-gray-500 p-3 shadow-xl text-sm rounded-xl">
             <div className="flex justify-between">
-
                 <div className="tracking-wider content-center">
                     <span>© {new Date().getFullYear()} </span>
                     <span>• Auth v2 .4 </span>
@@ -19,12 +18,9 @@ export const Footer = () => {
                         <p className="">
                             {t('login.devEnv')}:
                         </p>
-
                     </div>
-
                     <div className="flex gap-3">
                         {APPS.filter(app => app.type === 'dev').map(app => (
-
                             <RoundedTinyButton
                                 className={`hover:bg-gray-200
                                 ${currentApp?.id === app.id
@@ -43,7 +39,6 @@ export const Footer = () => {
                         ))
                         }
                     </div>
-
                 </div>
             </div>
         </footer>
