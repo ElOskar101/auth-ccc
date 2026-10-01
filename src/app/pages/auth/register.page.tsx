@@ -67,7 +67,7 @@ export const RegisterPage = ()=> {
             <section className="flex flex-col space-y-5 sm:flex-row max-w-md w-full mt-3">
             <Card size="2xl">
                 <CardHeader>
-                    <div className="flex">
+                    <div className="flex flex-col">
                         <LangAndThemeSelector/>
                     </div>
                     {currentApp && (
@@ -81,7 +81,7 @@ export const RegisterPage = ()=> {
                         </>
                     )
                     }
-                    <p className="text-center font-semibold dark:text-amber-500 text-md text-orange-600">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): ""}</p>
+                    <p className="text-center my-4 dark:text-amber-500 text-md text-orange-400">{currentApp?.type === "dev" ? t('register.accountForDevelopersWarning'): ""}</p>
                 </CardHeader>
                 <CardBody onClick={()=>{console.log(form.formState.errors, form.formState.isValid)}}>
                     <form noValidate onSubmit={form.handleSubmit(onHandleRegister)} >

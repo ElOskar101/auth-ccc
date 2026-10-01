@@ -14,7 +14,7 @@
     "englishLanguage": "English",
     "selectApplication": "Select application",
     "rightReserved": "All rights reserved.",
-    "devEnv": "Testing environments",
+    "devEnv": "For testing",
     "insertTotpCode": "Insert TOTP:",
     "insertBackupCode": "Insert backup code:",
     "backupCodeInstead": "Use backup code instead",

@@ -29,7 +29,7 @@ const APPS: AppInfo[] = [
         url:"https://agent.controlcentralcarrier.com",
         apiUrl:"https://dev-carrier.dentalautomation.ai/api/v2"
     },
-    {
+    /*{
         id: 'agent',
         name: 'Agent dashboard',
         logo: '/agent-logo.svg',
@@ -37,7 +37,7 @@ const APPS: AppInfo[] = [
         disabled: true,
         url:"https://agent.controlcentralcarrier.com",
         apiUrl:"https://carriers.dentalautomation.ai/api/v2"
-    },
+    },*/
     {
         id: 'orioris',
         name: 'Oriois Playground',

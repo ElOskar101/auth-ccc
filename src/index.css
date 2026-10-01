@@ -1,2 +1,52 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: "Roboto", sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: #fcfcff;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+            radial-gradient(
+                    ellipse at 0% 48%,
+                    rgb(191 199 255 / 55%),
+                    transparent 65%
+            ),
+            radial-gradient(
+                    ellipse at 100% 65%,
+                    rgb(220 199 255 / 45%),
+                    transparent 60%
+            ),
+            #fcfcff;
+}
+
+html.dark body::before {
+    background:
+            radial-gradient(
+                    ellipse at 0% 48%,
+                    rgb(78 87 160 / 30%),
+                    transparent 65%
+            ),
+            radial-gradient(
+                    ellipse at 100% 65%,
+                    rgb(112 69 153 / 25%),
+                    transparent 60%
+            ),
+            #18181b;
+}
+
+#root {
+    min-height: 100dvh;
+    isolation: isolate;
+}
