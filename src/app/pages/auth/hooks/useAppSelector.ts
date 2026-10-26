@@ -34,7 +34,7 @@ const APPS: AppInfo[] = [
         name: 'Agent dashboard',
         logo: '/agent-logo.svg',
         type: 'prod',
-        disabled: true,
+        disabled: false,
         url:"https://agent.controlcentralcarrier.com",
         apiUrl:"https://carriers.dentalautomation.ai/api/v2"
     },
