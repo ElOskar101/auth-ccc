@@ -1,6 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {RouterNavigateOptions} from "react-router";
+import type {RouterNavigateOptions} from "react-router-dom";
 
 interface Props {
     href: string;
