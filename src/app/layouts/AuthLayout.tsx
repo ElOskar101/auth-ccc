@@ -6,7 +6,6 @@ import {Container} from "@/app/components/container.tsx";
 
 export const AuthLayout = () => {
     return (
-
         <Container>
                 <Outlet/>
                 <Footer/>

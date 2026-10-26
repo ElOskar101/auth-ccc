@@ -14,7 +14,6 @@ export const AppRoutes = () => {
                 <Route index element={<LoginPage/>}/>
                 <Route path="login" element={<LoginPage/>}/>
                 <Route path="register" element={<RegisterPage/>}/>
-
             </Route>
             <Route element={<RecoverPasswordLayout/>}>
                 <Route index element={<ForgotPasswordPage/>}/>
