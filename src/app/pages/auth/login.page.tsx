@@ -178,36 +178,24 @@ export const LoginPage = ()=> {
                                 <div className="">
                                     <Label htmlFor="username">{t('login.username')}</Label>
                                     <Input type="text" id="username" autoComplete="username"
-                                           disabled={currentApp?.id === 'orioris'}
                                            {...form.register("username")}
                                            placeholder={t('login.usernamePlaceholder')} required/>
                                 </div>
                                 <div className="">
                                     <Label htmlFor="password">{t('login.password')}</Label>
                                     <InputPassword placeholder="●●●●●●●●" className="placeholder:tracking-wide"
-                                                   disabled={currentApp?.id === 'orioris'} {...form.register("password")}/>
+                                                   {...form.register("password")}/>
                                 </div>
                                 <div className="mb-3 flex justify-end">
-                                    {currentApp?.id === 'orioris' ?
-                                        <Button
-                                            disabled={(!form.formState.isValid && currentApp?.id !== 'orioris') || isLoading}
-                                            className="justify-endr"
-                                            variant="primary"
-                                            type="button"
-                                            onClick={() => navigate(currentApp?.url || '/')}>
-                                            <Spinner variant="white" hidden={!isLoading} />
-                                            {t('login.logIn')}
-                                        </Button>
-                                        :
-                                        <Button
-                                            disabled={!form.formState.isValid || isLoading}
-                                            className="w-full"
-                                            variant={currentApp?.type === "dev" ? "neutral" : "primary"}
-                                            type="submit">
-                                            <Spinner variant="white" hidden={!isLoading} />
-                                            {t('login.logIn')}
-                                        </Button>
-                                    }
+
+                                <Button
+                                    disabled={!form.formState.isValid || isLoading}
+                                    className="w-full"
+                                    variant={currentApp?.type === "dev" ? "neutral" : "primary"}
+                                    type="submit">
+                                    <Spinner variant="white" hidden={!isLoading} />
+                                    {t('login.logIn')}
+                                </Button>
 
                                 </div>
                             </fieldset>

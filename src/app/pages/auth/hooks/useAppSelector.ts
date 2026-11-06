@@ -45,7 +45,7 @@ const APPS: AppInfo[] = [
         type: 'prod',
         disabled: false,
         url:"https://orioris.controlcentralcarrier.com/",
-        apiUrl:""
+        apiUrl:"https://carriers.dentalautomation.ai/api/v2"
     },
     {
         id: 'dev-cc',
