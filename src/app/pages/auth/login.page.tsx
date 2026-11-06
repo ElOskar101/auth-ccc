@@ -102,6 +102,7 @@ export const LoginPage = ()=> {
                     executeGetUserInfo(data.token).then(
                         (result)=> {
                             setIsOpenModal(true);
+                            console.log(result.data);
                             setUser(result.data as UserInterface);
                         }
                     );
@@ -233,11 +234,12 @@ export const LoginPage = ()=> {
             <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(!isOpenModal)} size="md">
                 <ModalHeader>
                     {user?.username ? (
+
                         <div className="flex gap-3 items-center">
                             <img
                                 className="rounded-full w-10 h-10 ring-1 ring-blue-400 p-1"
                                 alt="user"
-                                src={user.urlImage || '/new-ccc-isolated-logo.svg'}
+                                src={currentApp?.apiUrl.replace('api/v2', 'pictures/') + user.urlImage || '/new-ccc-isolated-logo.svg'}
                             />
                             <div>
                                 <h2 className="font-semibold capitalize">

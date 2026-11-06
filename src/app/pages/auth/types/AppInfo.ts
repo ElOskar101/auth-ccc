@@ -5,5 +5,5 @@ export interface AppInfo {
     type: 'dev' | 'prod',
     url: string;
     disabled: boolean;
-    apiUrl?: string;
+    apiUrl: string;
 }
